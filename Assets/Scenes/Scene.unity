@@ -249,8 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee6cc2f0596b0e28b9874410c2c1022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laneWidth: 8
-  horizontalForceMult: 63.7
+  horizontalForceMult: 16
   deadzone: 0.501
 --- !u!136 &1613029363
 CapsuleCollider:

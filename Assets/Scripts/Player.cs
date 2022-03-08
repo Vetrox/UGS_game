@@ -34,7 +34,6 @@ public class Player : MonoBehaviour
     private Rigidbody rigidBody;
 
     private int currentLaneIndex = 0;
-    public int laneWidth = 5;
     public float horizontalForceMult = 10;
     [Range(0f, 1f)]
     public float deadzone = 0.25f;
@@ -54,7 +53,6 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         bool under_deadzone = Mathf.Abs(horizontalInput) < deadzone && Mathf.Abs(verticalInput) < deadzone;
-        print(horizontalInput);
         if (under_deadzone)
         {
             wasUnderDeadzone = true;
@@ -83,7 +81,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        int laneX = currentLaneIndex * laneWidth;
+        int laneX = currentLaneIndex;
 
         float nextX = transform.position.x + rigidBody.velocity.x * Time.fixedDeltaTime;
 

@@ -23,7 +23,6 @@ public class Level : MonoBehaviour
     void Start()
     {
         TextAsset levelTextAsset = Resources.Load<TextAsset>("Levels/" + levelName);
-        print(levelTextAsset);
         levelFile = JsonUtility.FromJson<LevelFile>(levelTextAsset.text);
         cookLevel();
     }
