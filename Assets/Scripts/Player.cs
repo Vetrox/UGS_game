@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     public float deadzone = 0.25f;
     private bool firstPhysicsMovement = true;
     private bool wasUnderDeadzone = true;
+    private bool gameOver = false;
 
     // Start is called before the first frame update
     void Start()
@@ -86,10 +87,22 @@ public class Player : MonoBehaviour
         {
             nextMove = NextMove.NONE;
         }
+        print("Impulse: " + collision.impulse.z);
+        if (collision.impulse.z < -0.21f)
+        {
+            gameOver = true;
+        }
     }
 
     void FixedUpdate()
     {
+        if (gameOver)
+        {
+            return;
+        }
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, 4);
+
+
         Vector2 curPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 curVel = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
         Vector2 nextPos = curPos + curVel * Time.fixedDeltaTime;
