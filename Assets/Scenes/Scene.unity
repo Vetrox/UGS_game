@@ -227,9 +227,9 @@ GameObject:
   - component: {fileID: 1613029366}
   - component: {fileID: 1613029365}
   - component: {fileID: 1613029364}
-  - component: {fileID: 1613029363}
   - component: {fileID: 1613029362}
   - component: {fileID: 1613029367}
+  - component: {fileID: 1613029363}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -249,10 +249,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee6cc2f0596b0e28b9874410c2c1022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalForceMult: 16
+  horizontalForceMult: 3.05
   deadzone: 0.501
---- !u!136 &1613029363
-CapsuleCollider:
+--- !u!65 &1613029363
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -261,9 +261,8 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: ef3f0b841e756ec7d9482b8b899a8ee1, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1613029364
 MeshRenderer:
@@ -313,7 +312,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1613029361}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1613029366
 Transform:
   m_ObjectHideFlags: 0
@@ -340,7 +339,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
