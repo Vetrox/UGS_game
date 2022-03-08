@@ -87,7 +87,6 @@ public class Player : MonoBehaviour
         {
             nextMove = NextMove.NONE;
         }
-        print("Impulse: " + collision.impulse.z);
         if (collision.impulse.z < -0.21f)
         {
             gameOver = true;
