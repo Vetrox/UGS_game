@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
 
 
 
-    private Vector2 lanePos = new Vector2(0, 0);
+    private Vector2Int lanePos = new Vector2Int(0, 1);
     private NextMove nextMove;
     private Rigidbody rigidBody;
     public float horizontalForceMult = 10;
@@ -83,13 +83,14 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        Vector2 curPos = new Vector2(transform.position.x, transform.position.y);
+        Vector2 curVel = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
+        Vector2 nextPos = curPos + curVel * Time.fixedDeltaTime;
 
-        float nextX = transform.position.x + rigidBody.velocity.x * Time.fixedDeltaTime;
+        Vector2 diff = curPos - lanePos;
+        Vector2 nextDiff = nextPos - lanePos;
 
-        float diff = Mathf.Abs(transform.position.x - lanePos.x);
-        float nextDiff = Mathf.Abs(nextX - lanePos.x);
-        bool should_reset = diff < nextDiff;
-
+        bool should_reset = nextDiff.sqrMagnitude > diff.sqrMagnitude;
         if (nextMove != NextMove.NONE && should_reset)
         {
             nextMove = NextMove.NONE;
@@ -97,7 +98,7 @@ public class Player : MonoBehaviour
 
         if (nextMove == NextMove.NONE)
         {
-            transform.position = new Vector3(lanePos.x, transform.position.y, transform.position.z);
+            transform.position = new Vector3(lanePos.x, lanePos.y, transform.position.z);
         }
 
         rigidBody.velocity = MoveToV3(nextMove) * horizontalForceMult;
