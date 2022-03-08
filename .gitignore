@@ -4,6 +4,6 @@ Temp/
 Build/
 obj/
 Assembly-CSharp.csproj
-Throwaway1.sln
-.vs/Throwaway1/v16
+UGS_game.sln
+.vs/UGS_game/v16
 *.log
