@@ -36,6 +36,10 @@ public class Player : MonoBehaviour
     private int currentLaneIndex = 0;
     public int laneWidth = 5;
     public float horizontalForceMult = 10;
+    [Range(0f, 1f)]
+    public float deadzone = 0.25f;
+
+    private bool wasUnderDeadzone = true;
 
     // Start is called before the first frame update
     void Start()
@@ -47,22 +51,26 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (nextMove != NextMove.NONE) {
-            // don't get new move if we haven't finished yet
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        bool under_deadzone = Mathf.Abs(horizontalInput) < deadzone && Mathf.Abs(verticalInput) < deadzone;
+        print(horizontalInput);
+        if (under_deadzone)
+        {
+            wasUnderDeadzone = true;
             return;
         }
 
-        float horizontalInput = Input.GetAxis("Horizontal");
+        if (!wasUnderDeadzone || nextMove != NextMove.NONE) return;
+        wasUnderDeadzone = false;
+
         if (horizontalInput < 0) {
             nextMove = NextMove.LEFT;
             currentLaneIndex--;
         } else if (horizontalInput > 0) {
             nextMove = NextMove.RIGHT;
             currentLaneIndex++;
-        }
-
-        float verticalInput = Input.GetAxis("Vertical");
-        if (verticalInput < 0)
+        } else if (verticalInput < 0)
         {
             nextMove = NextMove.DOWN;
         }

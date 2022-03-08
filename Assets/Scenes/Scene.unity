@@ -316,6 +316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laneWidth: 8
   horizontalForceMult: 63.7
+  deadzone: 0.501
 --- !u!136 &1613029363
 CapsuleCollider:
   m_ObjectHideFlags: 0
