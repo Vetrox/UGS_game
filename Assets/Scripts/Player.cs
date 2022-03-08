@@ -17,15 +17,15 @@ public class Player : MonoBehaviour
         switch(move)
         {
             case NextMove.LEFT:
-                return Vector3.left;
+                return Vector3.left + Vector3.forward;
             case NextMove.RIGHT:
-                return Vector3.right;
+                return Vector3.right + Vector3.forward;
             case NextMove.UP:
-                return Vector3.up;
+                return Vector3.up + Vector3.forward;
             case NextMove.DOWN:
-                return Vector3.down;
+                return Vector3.down + Vector3.forward;
             default:
-                return Vector3.zero;
+                return Vector3.zero + Vector3.forward;
         }
     }
 
@@ -44,7 +44,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
-        rigidBody.AddForce(4.0f * Vector3.forward, ForceMode.VelocityChange);
     }
 
     // Update is called once per frame
