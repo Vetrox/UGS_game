@@ -52,10 +52,10 @@ public class Level : MonoBehaviour
                     Instantiate(floorTilePrefab, new Vector3(--lane, y, --z), Quaternion.identity, this.transform);
                     break;
                 case 'u':
-                    Instantiate(floorTilePrefab, new Vector3(lane, ++y, z), Quaternion.identity, this.transform);
+                    Instantiate(floorTilePrefab, new Vector3(lane, ++y, --z), Quaternion.identity, this.transform);
                     break;
                 case 'd':
-                    Instantiate(floorTilePrefab, new Vector3(lane, --y, z), Quaternion.identity, this.transform);
+                    Instantiate(floorTilePrefab, new Vector3(lane, --y, --z), Quaternion.identity, this.transform);
                     Instantiate(sawPrefab, new Vector3(lane, y + 4, z), Quaternion.identity, this.transform);
                     break;
             }
