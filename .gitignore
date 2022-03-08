@@ -6,4 +6,6 @@ obj/
 Assembly-CSharp.csproj
 UGS_game.sln
 .vs/UGS_game/v16
+.vscode/*
 *.log
+*.csproj
