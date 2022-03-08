@@ -17,15 +17,15 @@ public class Player : MonoBehaviour
         switch(move)
         {
             case NextMove.LEFT:
-                return Vector3.left + Vector3.forward;
+                return Vector3.left;
             case NextMove.RIGHT:
-                return Vector3.right + Vector3.forward;
+                return Vector3.right;
             case NextMove.UP:
-                return Vector3.up + Vector3.forward;
+                return Vector3.up;
             case NextMove.DOWN:
-                return Vector3.down + Vector3.forward;
+                return Vector3.down;
             default:
-                return Vector3.zero + Vector3.forward;
+                return Vector3.zero;
         }
     }
 
@@ -34,16 +34,17 @@ public class Player : MonoBehaviour
     private Vector2Int lanePos = new Vector2Int(0, 1);
     private NextMove nextMove;
     private Rigidbody rigidBody;
-    public float horizontalForceMult = 10;
+    public Vector2 forceMult = new Vector2(10, 20);
     [Range(0f, 1f)]
     public float deadzone = 0.25f;
-
+    private bool firstPhysicsMovement = true;
     private bool wasUnderDeadzone = true;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        rigidBody.AddForce(0, 0, 4, ForceMode.VelocityChange);
     }
 
     // Update is called once per frame
@@ -60,6 +61,7 @@ public class Player : MonoBehaviour
 
         if (!wasUnderDeadzone || nextMove != NextMove.NONE) return;
         wasUnderDeadzone = false;
+        firstPhysicsMovement = true;
 
         if (horizontalInput < 0) {
             nextMove = NextMove.LEFT;
@@ -71,13 +73,19 @@ public class Player : MonoBehaviour
         {
             nextMove = NextMove.DOWN;
             lanePos.y--;
-        }
-        else if (verticalInput > 0)
+        } else if (verticalInput > 0)
         {
             lanePos.y++;
             nextMove = NextMove.UP;
         }
+    }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if (nextMove == NextMove.UP && collision.collider.CompareTag("FloorTile"))
+        {
+            nextMove = NextMove.NONE;
+        }
     }
 
     void FixedUpdate()
@@ -89,7 +97,16 @@ public class Player : MonoBehaviour
         Vector2 diff = curPos - lanePos;
         Vector2 nextDiff = nextPos - lanePos;
 
-        bool should_reset = nextDiff.sqrMagnitude > diff.sqrMagnitude;
+        bool should_reset = false; //  nextDiff.sqrMagnitude > diff.sqrMagnitude;
+
+        if (nextMove == NextMove.RIGHT)
+        {
+            should_reset = nextPos.x > lanePos.x;
+        } else if (nextMove == NextMove.LEFT)
+        {
+            should_reset = nextPos.x < lanePos.x;
+        }
+
         if (nextMove != NextMove.NONE && should_reset)
         {
             nextMove = NextMove.NONE;
@@ -97,9 +114,15 @@ public class Player : MonoBehaviour
 
         if (nextMove == NextMove.NONE)
         {
-            transform.position = new Vector3(lanePos.x, lanePos.y, transform.position.z);
+            rigidBody.velocity = new Vector3(0, rigidBody.velocity.y, rigidBody.velocity.z);
+            transform.position = new Vector3(lanePos.x, transform.position.y, transform.position.z);
         }
 
-        rigidBody.velocity = MoveToV3(nextMove) * horizontalForceMult;
+        if (firstPhysicsMovement)
+        {
+            firstPhysicsMovement = false;
+            var moveVec = MoveToV3(nextMove);
+            rigidBody.AddForce(moveVec.x * forceMult.x, moveVec.y * forceMult.y, 0, ForceMode.VelocityChange);
+        }
     }
 }
