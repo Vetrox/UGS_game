@@ -30,10 +30,10 @@ public class Player : MonoBehaviour
     }
 
 
+
+    private Vector2 lanePos = new Vector2(0, 0);
     private NextMove nextMove;
     private Rigidbody rigidBody;
-
-    private int currentLaneIndex = 0;
     public float horizontalForceMult = 10;
     [Range(0f, 1f)]
     public float deadzone = 0.25f;
@@ -64,16 +64,18 @@ public class Player : MonoBehaviour
 
         if (horizontalInput < 0) {
             nextMove = NextMove.LEFT;
-            currentLaneIndex--;
+            lanePos.x--;
         } else if (horizontalInput > 0) {
             nextMove = NextMove.RIGHT;
-            currentLaneIndex++;
+            lanePos.x++;
         } else if (verticalInput < 0)
         {
             nextMove = NextMove.DOWN;
+            lanePos.y--;
         }
         else if (verticalInput > 0)
         {
+            lanePos.y++;
             nextMove = NextMove.UP;
         }
 
@@ -81,12 +83,11 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        int laneX = currentLaneIndex;
 
         float nextX = transform.position.x + rigidBody.velocity.x * Time.fixedDeltaTime;
 
-        float diff = Mathf.Abs(transform.position.x - laneX);
-        float nextDiff = Mathf.Abs(nextX - laneX);
+        float diff = Mathf.Abs(transform.position.x - lanePos.x);
+        float nextDiff = Mathf.Abs(nextX - lanePos.x);
         bool should_reset = diff < nextDiff;
 
         if (nextMove != NextMove.NONE && should_reset)
@@ -96,7 +97,7 @@ public class Player : MonoBehaviour
 
         if (nextMove == NextMove.NONE)
         {
-            transform.position = new Vector3(laneX, transform.position.y, transform.position.z);
+            transform.position = new Vector3(lanePos.x, transform.position.y, transform.position.z);
         }
 
         rigidBody.velocity = MoveToV3(nextMove) * horizontalForceMult;
