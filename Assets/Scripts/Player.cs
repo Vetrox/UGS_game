@@ -76,19 +76,18 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         int laneX = currentLaneIndex * laneWidth;
-        bool should_reset = false;
-        if (nextMove == NextMove.RIGHT)
-        {
-            should_reset = transform.position.x > laneX;
-        } else if (nextMove == NextMove.LEFT)
-        {
-            should_reset = transform.position.x < laneX;
-        }
+
+        float nextX = transform.position.x + rigidBody.velocity.x * Time.fixedDeltaTime;
+
+        float diff = Mathf.Abs(transform.position.x - laneX);
+        float nextDiff = Mathf.Abs(nextX - laneX);
+        bool should_reset = diff < nextDiff;
 
         if (nextMove != NextMove.NONE && should_reset)
         {
             nextMove = NextMove.NONE;
         }
+
         if (nextMove == NextMove.NONE)
         {
             transform.position = new Vector3(laneX, transform.position.y, transform.position.z);
