@@ -12,27 +12,28 @@ public class Player : MonoBehaviour
         DOWN,
     }
 
-    private NextMove nextMove;
-    private bool isMoving;
-    private Rigidbody rigidBody;
-    private float timeSinceLastMove; // seconds
+    private NextMove nextMove = NextMove.NONE;
+    private bool isMoving = false;
+    private float timeSinceLastMove = 0.0f; // seconds
 
-    [SerializeField] private Transform level;
+    private Rigidbody rigidBody;
+
+    public Transform level;
+    public float forwardVelocity = 1.0f;
+    public float moveTime = 0.25f;
+    public float laneSeparation = 2.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        isMoving = false;
-        nextMove = NextMove.NONE;
-        timeSinceLastMove = 0.0f;
         rigidBody = GetComponent<Rigidbody>();
-        rigidBody.AddForce(Vector3.forward, ForceMode.VelocityChange);
+        rigidBody.AddForce(forwardVelocity * Vector3.forward, ForceMode.VelocityChange);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isMoving || Time.realtimeSinceStartup < timeSinceLastMove + 0.2f) {
+        if (isMoving || Time.realtimeSinceStartup < timeSinceLastMove + 0.1f) {
             // don't get new move if we haven't finished yet
             return;
         }
@@ -54,11 +55,12 @@ public class Player : MonoBehaviour
 
     private void EndMove()
     {
-        timeSinceLastMove = Time.realtimeSinceStartup;
-        rigidBody.velocity = Vector3.forward;
-        transform.position = new Vector3(0, 2, transform.position.z);
-        isMoving = false;
         nextMove = NextMove.NONE;
+        isMoving = false;
+        timeSinceLastMove = Time.realtimeSinceStartup;
+
+        rigidBody.velocity = Vector3.forward;
+        transform.position = new Vector3(0, transform.position.y, transform.position.z);
     }
 
     void FixedUpdate()
@@ -67,10 +69,10 @@ public class Player : MonoBehaviour
             case NextMove.LEFT:
                 if (!isMoving) {
                     isMoving = true;
-                    rigidBody.AddForce(5 * Vector3.left, ForceMode.VelocityChange);
+                    rigidBody.AddForce(laneSeparation / moveTime * Vector3.left, ForceMode.VelocityChange);
                 } else {
-                    if (transform.position.x <= -1) {
-                        level.position = new Vector3(level.position.x + 1, 0, 0);
+                    if (transform.position.x + rigidBody.velocity.x * Time.fixedDeltaTime <= -laneSeparation) {
+                        level.position = new Vector3(level.position.x + laneSeparation, 0, 0);
                         EndMove();
                     }
                 }
@@ -78,10 +80,10 @@ public class Player : MonoBehaviour
             case NextMove.RIGHT:
                 if (!isMoving) {
                     isMoving = true;
-                    rigidBody.AddForce(5 * Vector3.right, ForceMode.VelocityChange);
+                    rigidBody.AddForce(laneSeparation / moveTime * Vector3.right, ForceMode.VelocityChange);
                 } else {
-                    if (transform.position.x >= 1) {
-                        level.position = new Vector3(level.position.x - 1, 0, 0);
+                    if (transform.position.x + rigidBody.velocity.x * Time.fixedDeltaTime >= laneSeparation) {
+                        level.position = new Vector3(level.position.x - laneSeparation, 0, 0);
                         EndMove();
                     }
                 }
