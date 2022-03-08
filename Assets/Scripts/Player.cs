@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -90,7 +91,14 @@ public class Player : MonoBehaviour
         if (collision.impulse.z < -0.21f)
         {
             gameOver = true;
+            Invoke("GameOver", 1);
         }
+    }
+
+    void GameOver()
+    {
+        // TODO: Consider pausing the physics from now on, in case the falling player cause too much CPU usage.
+        SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
     }
 
     void FixedUpdate()
