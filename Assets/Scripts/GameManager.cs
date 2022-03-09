@@ -21,5 +21,31 @@ public class GameManager : MonoBehaviour
         return instance;
     }
 
-    public static string currentLevel;
+    private static LevelFile currentLevel;
+    private static AudioClip currentSong;
+
+    public static LevelFile GetCurrentLevel()
+    {
+        return currentLevel;
+    }
+    public static void SetActiveLevel(LevelFile level)
+    {
+        currentLevel = level;
+        currentSong = Resources.Load<AudioClip>(currentLevel.path);
+    }
+
+    public static LevelFile LoadLevel(string id)
+    {
+        return JsonUtility.FromJson<LevelFile>(
+           Resources.Load<TextAsset>("Levels/" + id).text
+        );
+    }
+
+    public static void PlayCurrentSong()
+    {
+        var audio = instance.GetComponent<AudioSource>();
+        audio.clip = currentSong;
+        audio.Play();
+    }
+
 }

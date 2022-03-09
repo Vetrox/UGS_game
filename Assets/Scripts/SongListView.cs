@@ -27,7 +27,7 @@ public class SongListView : MonoBehaviour
             {
                 name = name.Substring(0, name.Length - ".json".Length);
                 print("music: " + name);
-                addLabel(name);
+                setupEntry(name);
             } else
             {
                 print("other: " + name);
@@ -35,24 +35,24 @@ public class SongListView : MonoBehaviour
         }
     }
 
-    void addLabel(string text)
+    void setupEntry(string id)
     {
+        var level = GameManager.LoadLevel(id);
+
         var item_go = Instantiate(m_ItemPrefab);
-        item_go.GetComponentInChildren<Text>().text = text;
+        item_go.GetComponentInChildren<Text>().text = level.displayName;
         item_go.transform.SetParent(m_ContentContainer);
         item_go.transform.localScale = Vector2.one;
 
         item_go.GetComponent<Button>().onClick
-            .AddListener(new UnityAction(() => {
-                LoadLevel(text);
-            }));
+            .AddListener(new UnityAction(() => LoadLevel(level)));
     }
 
-    void LoadLevel(string levelName)
+    void LoadLevel(LevelFile level)
     {
-        print("Enter: SongListView::LoadLevel(" + levelName + ")");
-        GameManager.currentLevel = levelName;
+        print("Enter: SongListView::LoadLevel(" + level.displayName + ")");
+        GameManager.SetActiveLevel(level);
         SceneManager.LoadScene("Scene");
-        print("Exit: SongListView::LoadLevel(" + levelName + ")");
+        print("Exit: SongListView::LoadLevel(" + level.displayName + ")");
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-class LevelFile
+public class LevelFile
 {
     public string displayName;
     public int bpm;
@@ -14,26 +14,14 @@ class LevelFile
 
 public class Level : MonoBehaviour
 {
-    LevelFile levelFile;
-
     public Transform floorTilePrefab;
     public Transform sawPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
-        TextAsset levelTextAsset = Resources.Load<TextAsset>("Levels/" + GameManager.currentLevel);
-        levelFile = JsonUtility.FromJson<LevelFile>(levelTextAsset.text);
         cookLevel();
-        loadSong();
-    }
-
-    private void loadSong()
-    {
-        AudioClip audioSourceAsset = Resources.Load<AudioClip>(levelFile.path);
-
-        GameManager.getInstance().GetComponent<AudioSource>().clip = audioSourceAsset;
-        GameManager.getInstance().GetComponent<AudioSource>().PlayDelayed(levelFile.start_offset);
+        GameManager.PlayCurrentSong();
     }
 
     private void cookLevel()
@@ -42,7 +30,7 @@ public class Level : MonoBehaviour
         int y = 0;
         int z = 0;
 
-        foreach (char c in levelFile.data) {
+        foreach (char c in GameManager.GetCurrentLevel().data) {
             switch (c) {
                 case '-':
                     Instantiate(floorTilePrefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
