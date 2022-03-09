@@ -13,6 +13,18 @@ public class Player : MonoBehaviour
         DOWN
     }
 
+    public Vector2 forceMult = new Vector2(10, 20);
+    [Range(0f, 1f)]
+    public float deadzone = 0.25f;
+    public float maxSlideDuration = 0.5f;
+
+    private Vector2Int lanePos = new Vector2Int(0, 1);
+    private NextMove nextMove;
+    private float slideStart;
+    private Rigidbody rigidBody;
+    private bool firstPhysicsMovement = true;
+    private bool gameOver = false;
+
     Vector3 MoveToV3(NextMove move)
     {
         switch(move)
@@ -23,24 +35,11 @@ public class Player : MonoBehaviour
                 return Vector3.right;
             case NextMove.UP:
                 return Vector3.up;
-            case NextMove.DOWN:
-                return Vector3.down;
+
             default:
                 return Vector3.zero;
         }
     }
-
-
-
-    private Vector2Int lanePos = new Vector2Int(0, 1);
-    private NextMove nextMove;
-    private Rigidbody rigidBody;
-    public Vector2 forceMult = new Vector2(10, 20);
-    [Range(0f, 1f)]
-    public float deadzone = 0.25f;
-    private bool firstPhysicsMovement = true;
-    private bool wasUnderDeadzone = true;
-    private bool gameOver = false;
 
     // Start is called before the first frame update
     void Start()
@@ -52,32 +51,24 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        bool under_deadzone = Mathf.Abs(horizontalInput) < deadzone && Mathf.Abs(verticalInput) < deadzone;
-        if (under_deadzone)
-        {
-            wasUnderDeadzone = true;
+        if (nextMove != NextMove.NONE) {
             return;
         }
 
-        if (!wasUnderDeadzone || nextMove != NextMove.NONE) return;
-        wasUnderDeadzone = false;
-        firstPhysicsMovement = true;
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
-        if (horizontalInput < 0) {
+        if (horizontalInput < -deadzone) {
             nextMove = NextMove.LEFT;
             lanePos.x--;
-        } else if (horizontalInput > 0) {
+        } else if (horizontalInput > deadzone) {
             nextMove = NextMove.RIGHT;
             lanePos.x++;
-        } else if (verticalInput < 0)
+        } else if (verticalInput < -deadzone)
         {
             nextMove = NextMove.DOWN;
-            lanePos.y--;
-        } else if (verticalInput > 0)
+        } else if (verticalInput > deadzone)
         {
-            lanePos.y++;
             nextMove = NextMove.UP;
         }
     }
@@ -87,6 +78,7 @@ public class Player : MonoBehaviour
         if (nextMove == NextMove.UP && collision.collider.CompareTag("FloorTile"))
         {
             nextMove = NextMove.NONE;
+            firstPhysicsMovement = true;
         }
         if (collision.impulse.z < -0.21f)
         {
@@ -103,12 +95,25 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (gameOver)
-        {
+        if (gameOver || nextMove == NextMove.NONE) {
             return;
         }
-        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, 4);
 
+        if (firstPhysicsMovement)
+        {
+            firstPhysicsMovement = false;
+            if (nextMove == NextMove.DOWN) {
+                transform.rotation = Quaternion.AngleAxis(90.0f, Vector3.right);
+                slideStart = Time.realtimeSinceStartup;
+            } else {
+                var moveVec = MoveToV3(nextMove);
+                rigidBody.AddForce(moveVec.x * forceMult.x, moveVec.y * forceMult.y, 0, ForceMode.VelocityChange);
+            }
+
+            return;
+        }
+
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, 4);
 
         Vector2 curPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 curVel = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
@@ -119,30 +124,24 @@ public class Player : MonoBehaviour
 
         bool should_reset = false; //  nextDiff.sqrMagnitude > diff.sqrMagnitude;
 
-        if (nextMove == NextMove.RIGHT)
-        {
-            should_reset = nextPos.x > lanePos.x;
-        } else if (nextMove == NextMove.LEFT)
-        {
-            should_reset = nextPos.x < lanePos.x;
+        switch (nextMove) {
+            case NextMove.RIGHT:
+                should_reset = nextPos.x > lanePos.x;
+                break;
+            case NextMove.LEFT:
+                should_reset = nextPos.x < lanePos.x;
+                break;
+            case NextMove.DOWN:
+                should_reset = Time.realtimeSinceStartup > slideStart + maxSlideDuration;
+                break;
         }
 
-        if (nextMove != NextMove.NONE && should_reset)
-        {
+        if (should_reset) {
             nextMove = NextMove.NONE;
-        }
-
-        if (nextMove == NextMove.NONE)
-        {
+            firstPhysicsMovement = true;
             rigidBody.velocity = new Vector3(0, rigidBody.velocity.y, rigidBody.velocity.z);
             transform.position = new Vector3(lanePos.x, transform.position.y, transform.position.z);
-        }
-
-        if (firstPhysicsMovement)
-        {
-            firstPhysicsMovement = false;
-            var moveVec = MoveToV3(nextMove);
-            rigidBody.AddForce(moveVec.x * forceMult.x, moveVec.y * forceMult.y, 0, ForceMode.VelocityChange);
+            transform.rotation = Quaternion.identity;
         }
     }
 }
