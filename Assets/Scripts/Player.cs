@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
         DOWN
     }
 
-    public Vector2 forceMult = new Vector2(10, 20);
+    public Vector2 forceMult = new Vector2(2, 5);
     [Range(0f, 1f)]
     public float deadzone = 0.25f;
     public float maxSlideDuration = 0.5f;
