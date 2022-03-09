@@ -252,6 +252,7 @@ MonoBehaviour:
   forceMult: {x: 2, y: 5}
   deadzone: 0.501
   maxSlideDuration: 0.5
+  forwardForceMult: 0.07
 --- !u!136 &1613029363
 CapsuleCollider:
   m_ObjectHideFlags: 0
