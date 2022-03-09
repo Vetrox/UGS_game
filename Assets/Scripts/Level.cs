@@ -3,33 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-class LevelFile
+public class LevelFile
 {
     public string displayName;
     public int bpm;
     public float start_offset; // in seconds
+    public string path;
     public string data;
 }
 
 public class Level : MonoBehaviour
 {
-    LevelFile levelFile;
-
     public Transform floorTilePrefab;
     public Transform sawPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
-        TextAsset levelTextAsset = Resources.Load<TextAsset>("Levels/" + GameManager.currentLevel);
-        levelFile = JsonUtility.FromJson<LevelFile>(levelTextAsset.text);
         cookLevel();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        GameManager.PlayCurrentSong();
     }
 
     private void cookLevel()
@@ -38,7 +30,7 @@ public class Level : MonoBehaviour
         int y = 0;
         int z = 0;
 
-        foreach (char c in levelFile.data) {
+        foreach (char c in GameManager.GetCurrentLevel().data) {
             switch (c) {
                 case '-':
                     Instantiate(floorTilePrefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);

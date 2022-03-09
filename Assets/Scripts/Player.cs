@@ -25,6 +25,9 @@ public class Player : MonoBehaviour
     private bool firstPhysicsMovement = true;
     private bool gameOver = false;
 
+
+    private float forwardForce = 4;
+    [SerializeField] private float forwardForceMult = 0.05f;
     Vector3 MoveToV3(NextMove move)
     {
         switch(move)
@@ -45,7 +48,9 @@ public class Player : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
-        rigidBody.AddForce(0, 0, 4, ForceMode.VelocityChange);
+
+        forwardForce = GameManager.GetCurrentLevel().bpm * forwardForceMult;
+        rigidBody.AddForce(0, 0, forwardForce, ForceMode.VelocityChange);
     }
 
     // Update is called once per frame
@@ -114,7 +119,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, 4);
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, forwardForce);
 
         Vector2 curPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 curVel = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
