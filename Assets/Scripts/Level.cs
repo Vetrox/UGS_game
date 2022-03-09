@@ -8,6 +8,7 @@ class LevelFile
     public string displayName;
     public int bpm;
     public float start_offset; // in seconds
+    public string path;
     public string data;
 }
 
@@ -24,12 +25,15 @@ public class Level : MonoBehaviour
         TextAsset levelTextAsset = Resources.Load<TextAsset>("Levels/" + GameManager.currentLevel);
         levelFile = JsonUtility.FromJson<LevelFile>(levelTextAsset.text);
         cookLevel();
+        loadSong();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void loadSong()
     {
-        
+        AudioClip audioSourceAsset = Resources.Load<AudioClip>(levelFile.path);
+
+        GameManager.getInstance().GetComponent<AudioSource>().clip = audioSourceAsset;
+        GameManager.getInstance().GetComponent<AudioSource>().PlayDelayed(levelFile.start_offset);
     }
 
     private void cookLevel()

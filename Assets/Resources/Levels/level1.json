@@ -1,6 +1,7 @@
 {
     "displayName": "Level 1",
-    "bpm": 120,
-    "start_offset": 0.3,
+    "bpm": 90,
+    "start_offset": 2,
+    "path": "Music\\Sommarfågel",
     "data": "--u-r-l--r-u-dd-"
 }
