@@ -44,10 +44,10 @@ public class Level : MonoBehaviour
                     Instantiate(floorTilePrefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
                     break;
                 case 'l':
-                    Instantiate(floorTilePrefab, new Vector3(++lane, y, --z), Quaternion.identity, this.transform);
+                    Instantiate(floorTilePrefab, new Vector3(--lane, y, --z), Quaternion.identity, this.transform);
                     break;
                 case 'r':
-                    Instantiate(floorTilePrefab, new Vector3(--lane, y, --z), Quaternion.identity, this.transform);
+                    Instantiate(floorTilePrefab, new Vector3(++lane, y, --z), Quaternion.identity, this.transform);
                     break;
                 case 'u':
                     Instantiate(floorTilePrefab, new Vector3(lane, ++y, --z), Quaternion.identity, this.transform);
