@@ -43,4 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d10f1527c59f1ea8a729a1e68b2ef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: 
+  floorTilePrefab: {fileID: 1324523855320488789, guid: 345bd72606b89c46d96fd602e958fc0c, type: 3}
+  sawPrefab: {fileID: 6694000137219553482, guid: a597f2b774599deaebd23e49b4ca818a, type: 3}

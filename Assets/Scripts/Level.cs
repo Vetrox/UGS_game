@@ -46,7 +46,7 @@ public class Level : MonoBehaviour
                     break;
                 case 'd':
                     Instantiate(floorTilePrefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
-                    Instantiate(sawPrefab, new Vector3(lane, y + 4, z), Quaternion.identity, this.transform);
+                    Instantiate(sawPrefab, new Vector3(lane, y + 3, z), Quaternion.identity, this.transform);
                     break;
             }
 

@@ -456,6 +456,7 @@ MonoBehaviour:
   forceMult: {x: 2, y: 5}
   deadzone: 0.501
   maxSlideDuration: 0.5
+  forwardForceMult: 0.05
 --- !u!135 &1537006455
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -536,24 +537,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1896042046878290461, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
-      propertyPath: levelName
-      value: '-'
-      objectReference: {fileID: 0}
-    - target: {fileID: 1896042046878290461, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
-      propertyPath: sawPrefab
-      value: 
-      objectReference: {fileID: 6694000137219553482, guid: a597f2b774599deaebd23e49b4ca818a, type: 3}
-    - target: {fileID: 1896042046878290461, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
-      propertyPath: floorTilePrefab
-      value: 
-      objectReference: {fileID: 3254994693899943326, guid: 1483cf6cef2f43e7e9af170b6bd97230, type: 3}
     - target: {fileID: 1896042046878290462, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
       propertyPath: m_Name
-      value: Level
-      objectReference: {fileID: 0}
-    - target: {fileID: 1896042046878290462, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
-      propertyPath: m_TagString
       value: Level
       objectReference: {fileID: 0}
     m_RemovedComponents: []
