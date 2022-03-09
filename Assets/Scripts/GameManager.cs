@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     {
         var audio = instance.GetComponent<AudioSource>();
         audio.clip = currentSong;
-        audio.Play();
+        audio.PlayDelayed(currentLevel.start_offset);
     }
 
 }

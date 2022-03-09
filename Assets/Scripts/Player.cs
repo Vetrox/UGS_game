@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
 
-        forwardForce = GameManager.GetCurrentLevel().bpm * forwardForceMult;
+        forwardForce = 4.5f * GameManager.GetCurrentLevel().bpm / 60;
         rigidBody.AddForce(0, 0, forwardForce, ForceMode.VelocityChange);
     }
 
