@@ -9,3 +9,4 @@ UGS_game.sln
 .vscode/*
 *.log
 *.csproj
+UserSettings/EditorUserSettings.asset
