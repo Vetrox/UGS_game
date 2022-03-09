@@ -91,6 +91,7 @@ public class Player : MonoBehaviour
     {
         // TODO: Consider pausing the physics from now on, in case the falling player cause too much CPU usage.
         SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
+        print("After LoadScene");
     }
 
     void FixedUpdate()

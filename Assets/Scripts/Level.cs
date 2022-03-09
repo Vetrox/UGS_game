@@ -13,7 +13,6 @@ class LevelFile
 
 public class Level : MonoBehaviour
 {
-    public string levelName;
     LevelFile levelFile;
 
     public Transform floorTilePrefab;
@@ -22,7 +21,7 @@ public class Level : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TextAsset levelTextAsset = Resources.Load<TextAsset>("Levels/" + levelName);
+        TextAsset levelTextAsset = Resources.Load<TextAsset>("Levels/" + GameManager.currentLevel);
         levelFile = JsonUtility.FromJson<LevelFile>(levelTextAsset.text);
         cookLevel();
     }
