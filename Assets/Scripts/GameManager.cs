@@ -90,4 +90,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public static void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
