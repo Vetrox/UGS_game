@@ -14,7 +14,12 @@ public class LevelFile
 
 public class Level : MonoBehaviour
 {
-    public Transform floorTilePrefab;
+    public Transform floorTileStraight2Prefab;
+    public Transform floorTileStraight3Prefab;
+    public Transform floorTileStraight4Prefab;
+    public Transform floorTileConnectorU;
+    public Transform floorTileConnectorLR;
+    public Transform floorTileConnectorRL;
     public Transform sawPrefab;
 
     // Start is called before the first frame update
@@ -33,19 +38,27 @@ public class Level : MonoBehaviour
         foreach (char c in GameManager.GetCurrentLevel().data) {
             switch (c) {
                 case '-':
-                    Instantiate(floorTilePrefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
+                    Instantiate(floorTileStraight2Prefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
+                    Instantiate(floorTileStraight3Prefab, new Vector3(lane, y, z + 2), Quaternion.identity, this.transform);
                     break;
                 case 'l':
-                    Instantiate(floorTilePrefab, new Vector3(--lane, y, --z), Quaternion.identity, this.transform);
+                    Instantiate(floorTileConnectorRL, new Vector3(lane, y, z), Quaternion.identity, this.transform);
+                    Instantiate(floorTileStraight4Prefab, new Vector3(lane - 1, y, z + 1), Quaternion.identity, this.transform);
+                    lane--;
                     break;
                 case 'r':
-                    Instantiate(floorTilePrefab, new Vector3(++lane, y, --z), Quaternion.identity, this.transform);
+                    Instantiate(floorTileConnectorLR, new Vector3(lane, y, z), Quaternion.identity, this.transform);
+                    Instantiate(floorTileStraight4Prefab, new Vector3(lane + 1, y, z + 1), Quaternion.identity, this.transform);
+                    lane++;
                     break;
                 case 'u':
-                    Instantiate(floorTilePrefab, new Vector3(lane, ++y, --z), Quaternion.identity, this.transform);
+                    Instantiate(floorTileConnectorU, new Vector3(lane, y, z), Quaternion.identity, this.transform);
+                    Instantiate(floorTileStraight4Prefab, new Vector3(lane, y + 1, z + 1), Quaternion.identity, this.transform);
+                    y++;
                     break;
                 case 'd':
-                    Instantiate(floorTilePrefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
+                    Instantiate(floorTileStraight2Prefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
+                    Instantiate(floorTileStraight3Prefab, new Vector3(lane, y, z + 2), Quaternion.identity, this.transform);
                     Instantiate(sawPrefab, new Vector3(lane, y + 3, z), Quaternion.identity, this.transform);
                     break;
             }
