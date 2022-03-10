@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     private float slideStart;
     private Rigidbody rigidBody;
     private bool firstPhysicsMovement = true;
+    private bool wasUnderDeadzone = true;
     private bool gameOver = false;
 
 
@@ -49,30 +50,37 @@ public class Player : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
 
-        forwardForce = 4.5f * GameManager.GetCurrentLevel().bpm / 60;
+        forwardForce = 5.0f * GameManager.GetCurrentLevel().bpm / 60.0f;
         rigidBody.AddForce(0, 0, forwardForce, ForceMode.VelocityChange);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (nextMove != NextMove.NONE) {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        bool underDeadzone = Mathf.Abs(horizontalInput) < deadzone && Mathf.Abs(verticalInput) < deadzone;
+
+        if (underDeadzone) {
+            wasUnderDeadzone = true;
             return;
         }
 
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        if (!wasUnderDeadzone || nextMove != NextMove.NONE) {
+            return;
+        }
 
-        if (horizontalInput < -deadzone) {
+        wasUnderDeadzone = false;
+        if (horizontalInput < 0) {
             nextMove = NextMove.LEFT;
             lanePos.x--;
-        } else if (horizontalInput > deadzone) {
+        } else if (horizontalInput > 0) {
             nextMove = NextMove.RIGHT;
             lanePos.x++;
-        } else if (verticalInput < -deadzone)
+        } else if (verticalInput < 0)
         {
             nextMove = NextMove.DOWN;
-        } else if (verticalInput > deadzone)
+        } else if (verticalInput > 0)
         {
             nextMove = NextMove.UP;
         }
@@ -80,6 +88,8 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        print(collision.impulse.z);
+
         if (nextMove == NextMove.UP && collision.collider.CompareTag("FloorTile"))
         {
             nextMove = NextMove.NONE;
@@ -113,6 +123,7 @@ public class Player : MonoBehaviour
                 slideStart = Time.realtimeSinceStartup;
             } else {
                 var moveVec = MoveToV3(nextMove);
+                //rigidBody.velocity = 5.0f * Vector3.forward;
                 rigidBody.AddForce(moveVec.x * forceMult.x, moveVec.y * forceMult.y, 0, ForceMode.VelocityChange);
             }
 
