@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+[RequireComponent(typeof(AudioSource))]
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
+    private static AudioSource audioSource = null;
+
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -15,6 +17,11 @@ public class GameManager : MonoBehaviour
             return;
         }
         instance = this;
+    }
+
+    void Start()
+    {
+        audioSource = instance.GetComponent<AudioSource>();
     }
 
     public static GameManager getInstance()
@@ -44,16 +51,23 @@ public class GameManager : MonoBehaviour
 
     public static void PlayCurrentSong()
     {
-        var audio = instance.GetComponent<AudioSource>();
-        audio.clip = currentSong;
-        audio.PlayDelayed(currentLevel.start_offset);
+        audioSource.clip = currentSong;
+        audioSource.PlayDelayed(currentLevel.start_offset);
+    }
+
+    public static void PauseCurrentSong()
+    {
+        audioSource.Pause();
+    }
+
+    public static void ResumeCurrentSong()
+    {
+        audioSource.Play();
     }
 
     public static void StopCurrentSong()
     {
-        var audio = instance.GetComponent<AudioSource>();
-        if (audio != null && audio.isPlaying)
-            audio.Stop();
+        audioSource.Stop();
     }
 
     public static void ReloadScene()
@@ -64,6 +78,16 @@ public class GameManager : MonoBehaviour
     public static void LoadLevelSelect()
     { 
         SceneManager.LoadScene("LevelSelectMenu");
+    }
+
+    public static void PausePhysics()
+    {
+        Time.timeScale = 0;
+    }
+
+    public static void ResumePhysics()
+    {
+        Time.timeScale = 1;
     }
 
 }
