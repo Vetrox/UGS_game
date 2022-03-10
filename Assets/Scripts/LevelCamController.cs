@@ -27,7 +27,6 @@ public class LevelCamController : MonoBehaviour
         r = Mathf.Log(r);
         g = Mathf.Log(g);
         b = Mathf.Log(b);
-        print(new Vector3(r, g, b));
         r = Mathf.Clamp(r, lowerLim, upperLim) - lowerLim;
         g = Mathf.Clamp(g, lowerLim, upperLim) - lowerLim;
         b = Mathf.Clamp(b, lowerLim, upperLim) - lowerLim;
@@ -38,7 +37,6 @@ public class LevelCamController : MonoBehaviour
         b /= delta;
 
         Camera.current.backgroundColor = new Color(r, g, b);
-       // print(new Vector3(r, g, b));
     }
 
     void ReduceSpectrum()
