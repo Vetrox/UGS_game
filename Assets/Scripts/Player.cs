@@ -88,8 +88,6 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        print(collision.impulse.z);
-
         if (nextMove == NextMove.UP && collision.collider.CompareTag("FloorTile"))
         {
             nextMove = NextMove.NONE;
@@ -97,23 +95,28 @@ public class Player : MonoBehaviour
         }
         if (collision.impulse.z < -0.21f)
         {
-            gameOver = true;
             Invoke("GameOver", 1);
         }
     }
 
     void GameOver()
     {
+        gameOver = true;
+        GameManager.StopCurrentSong();
         // TODO: Consider pausing the physics from now on, in case the falling player cause too much CPU usage.
         SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
-        print("After LoadScene");
     }
 
     void FixedUpdate()
     {
-        if (gameOver || nextMove == NextMove.NONE) {
+        if (gameOver) return;
+        if (transform.position.y < -1)
+        {
+            GameOver();
             return;
         }
+        if (nextMove == NextMove.NONE) return;
+        
 
         if (firstPhysicsMovement)
         {
