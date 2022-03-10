@@ -47,6 +47,6 @@ public class SongListView : MonoBehaviour
     void LoadLevel(LevelFile level)
     {
         GameManager.SetActiveLevel(level);
-        SceneManager.LoadScene("Scene");
+        SceneManager.LoadScene("LevelScene");
     }
 }

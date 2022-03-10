@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     public static void ReloadLevel()
     {
         var activeScene = SceneManager.GetActiveScene();
-        if (activeScene.name.Equals("Scene"))
+        if (activeScene.name.Equals("LevelScene"))
         {
             paused = false;
             SceneManager.LoadScene(activeScene.buildIndex);
