@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -46,6 +47,11 @@ public class GameManager : MonoBehaviour
         var audio = instance.GetComponent<AudioSource>();
         audio.clip = currentSong;
         audio.PlayDelayed(currentLevel.start_offset);
+    }
+
+    public static void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 }
