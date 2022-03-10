@@ -26,9 +26,8 @@ public class Player : MonoBehaviour
     private bool wasUnderDeadzone = true;
     private bool gameOver = false;
 
+    private float forwardVelocity;
 
-    private float forwardForce = 4;
-    [SerializeField] private float forwardForceMult = 0.05f;
     Vector3 MoveToV3(NextMove move)
     {
         switch(move)
@@ -50,8 +49,9 @@ public class Player : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
 
-        forwardForce = 5.0f * GameManager.GetCurrentLevel().bpm / 60.0f;
-        rigidBody.AddForce(0, 0, forwardForce, ForceMode.VelocityChange);
+        float beatLength = 60.0f / GameManager.GetCurrentLevel().bpm;
+        forwardVelocity = 5.0f / beatLength;
+        rigidBody.velocity = Vector3.forward * forwardVelocity;
     }
 
     private bool paused = false;
@@ -147,14 +147,13 @@ public class Player : MonoBehaviour
                 slideStart = Time.realtimeSinceStartup;
             } else {
                 var moveVec = MoveToV3(nextMove);
-                //rigidBody.velocity = 5.0f * Vector3.forward;
-                rigidBody.AddForce(moveVec.x * forceMult.x, moveVec.y * forceMult.y, 0, ForceMode.VelocityChange);
+                rigidBody.velocity = new Vector3(moveVec.x * forceMult.x, moveVec.y * forceMult.y, forwardVelocity);
             }
 
             return;
         }
 
-        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, forwardForce);
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, forwardVelocity);
 
         Vector2 curPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 curVel = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
