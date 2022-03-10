@@ -2,7 +2,19 @@ fileFormatVersion: 2
 guid: eca1169badfdeb018a1e1b3a23600e87
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -5035361736314833586
+    second: Cube|Retract
+  - first:
+      74: -1545233968408536577
+    second: Cube|Retract.001
+  - first:
+      74: 7383331855772606113
+    second: Head|Retract
+  - first:
+      74: 5662570116197385584
+    second: Head|Retract.001
   externalObjects: {}
   materials:
     materialImportMode: 2
