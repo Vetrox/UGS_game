@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6889476139962008797
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6338818649693129957, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338818649693129957, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338818649693129957, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338818649693129957, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338818649693129957, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338818649693129957, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338818649693129957, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338818649693129957, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338818649693129957, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338818649693129957, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338818649693129957, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679912842506065503, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
+      propertyPath: m_Name
+      value: FloorTileConnectorRL
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942257522780373824, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4493585093827132993, guid: a4d90b4e4ddeb72a5b21b43fe806305a, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5b02ec9b84ce44dcbb77d241cf8f8c20, type: 3}
