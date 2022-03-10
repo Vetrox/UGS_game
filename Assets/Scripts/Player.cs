@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
         }
         if (collision.impulse.z < -0.21f)
         {
-            
+            GameOver();
         }
     }
 
