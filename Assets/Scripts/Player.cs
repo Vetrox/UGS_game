@@ -103,10 +103,6 @@ public class Player : MonoBehaviour
             nextMove = NextMove.NONE;
             firstPhysicsMovement = true;
         }
-        if (collision.impulse.z < -0.21f)
-        {
-            GameOver();
-        }
     }
 
     void LoadGameOverScreen()
@@ -124,7 +120,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         if (gameOver) return;
-        if (transform.position.y < -1)
+        if (transform.position.y < -1 || rigidBody.velocity.z < forwardVelocity * 0.9)
         {
             GameOver();
             return;
