@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         audioSource = instance.GetComponent<AudioSource>();
+        // QualitySettings.vSyncCount = 1;
+        Application.targetFrameRate = 60;
     }
 
     public static GameManager getInstance()
