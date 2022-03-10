@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     private static GameManager instance = null;
     private static AudioSource audioSource = null;
 
+    private static bool paused = false; // only used in Player
+
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -70,9 +72,15 @@ public class GameManager : MonoBehaviour
         audioSource.Stop();
     }
 
-    public static void ReloadScene()
+    public static void ReloadLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        var activeScene = SceneManager.GetActiveScene();
+        if (activeScene.name.Equals("Scene"))
+        {
+            paused = false;
+            SceneManager.LoadScene(activeScene.buildIndex);
+        }
+        
     }
 
     public static void LoadLevelSelect()
@@ -93,5 +101,26 @@ public class GameManager : MonoBehaviour
     public static void LoadMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public static void ResumeLevel()
+    {
+        ResumePhysics();
+        ResumeCurrentSong();
+        SceneManager.UnloadSceneAsync("PauseMenu");
+        paused = false;
+    }
+
+    public static void PauseLevel()
+    {
+        PausePhysics();
+        PauseCurrentSong();
+        SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
+        paused = true;
+    }
+
+    public static bool IsPaused()
+    {
+        return paused;
     }
 }

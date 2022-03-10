@@ -54,26 +54,15 @@ public class Player : MonoBehaviour
         rigidBody.velocity = Vector3.forward * forwardVelocity;
     }
 
-    private bool paused = false;
-
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (paused)
-            {
-                GameManager.ResumePhysics();
-                GameManager.ResumeCurrentSong();
-                SceneManager.UnloadSceneAsync("PauseMenu");
-                paused = false;
-            }
+            if (GameManager.IsPaused()) GameManager.ResumeLevel();
             else
             {
-                GameManager.PausePhysics();
-                GameManager.PauseCurrentSong();
-                SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
-                paused = true;
+                GameManager.PauseLevel();
                 return;
             }
         }
@@ -116,16 +105,20 @@ public class Player : MonoBehaviour
         }
         if (collision.impulse.z < -0.21f)
         {
-            Invoke("GameOver", 1);
+            
         }
+    }
+
+    void LoadGameOverScreen()
+    {
+        GameManager.StopCurrentSong();
+        SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
     }
 
     void GameOver()
     {
         gameOver = true;
-        GameManager.StopCurrentSong();
-        // TODO: Consider pausing the physics from now on, in case the falling player cause too much CPU usage.
-        SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
+        Invoke("LoadGameOverScreen", 1);
     }
 
     void FixedUpdate()
