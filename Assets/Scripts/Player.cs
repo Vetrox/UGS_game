@@ -54,9 +54,30 @@ public class Player : MonoBehaviour
         rigidBody.AddForce(0, 0, forwardForce, ForceMode.VelocityChange);
     }
 
+    private bool paused = false;
+
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (paused)
+            {
+                GameManager.ResumePhysics();
+                GameManager.ResumeCurrentSong();
+                SceneManager.UnloadSceneAsync("PauseMenu");
+                paused = false;
+            }
+            else
+            {
+                GameManager.PausePhysics();
+                GameManager.PauseCurrentSong();
+                SceneManager.LoadScene("PauseMenu", LoadSceneMode.Additive);
+                paused = true;
+                return;
+            }
+        }
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         bool underDeadzone = Mathf.Abs(horizontalInput) < deadzone && Mathf.Abs(verticalInput) < deadzone;
