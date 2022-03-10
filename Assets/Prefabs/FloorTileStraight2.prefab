@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 346192105649457584, guid: 6898c6100c91e7b429ddec5f9f5ce937, type: 3}
       propertyPath: m_Size.z
-      value: 2
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 346192105649457584, guid: 6898c6100c91e7b429ddec5f9f5ce937, type: 3}
       propertyPath: m_Center.z
