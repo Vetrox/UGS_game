@@ -26,11 +26,7 @@ public class SongListView : MonoBehaviour
             if (name.EndsWith(".json"))
             {
                 name = name.Substring(0, name.Length - ".json".Length);
-                print("music: " + name);
                 setupEntry(name);
-            } else
-            {
-                print("other: " + name);
             }
         }
     }
@@ -50,9 +46,7 @@ public class SongListView : MonoBehaviour
 
     void LoadLevel(LevelFile level)
     {
-        print("Enter: SongListView::LoadLevel(" + level.displayName + ")");
         GameManager.SetActiveLevel(level);
         SceneManager.LoadScene("Scene");
-        print("Exit: SongListView::LoadLevel(" + level.displayName + ")");
     }
 }
