@@ -804,7 +804,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: placeholder
 --- !u!222 &786201285
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1332,7 +1332,7 @@ GameObject:
   - component: {fileID: 2080010465}
   - component: {fileID: 2080010464}
   m_Layer: 5
-  m_Name: InputField
+  m_Name: FPSInputText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1401,14 +1401,14 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2080010465}
   m_TextComponent: {fileID: 786201284}
   m_Placeholder: {fileID: 0}
-  m_ContentType: 0
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterValidation: 1
+  m_CharacterLimit: 3
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -1418,7 +1418,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 
+  m_Text: placeholder
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
