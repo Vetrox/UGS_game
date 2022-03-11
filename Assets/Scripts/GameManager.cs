@@ -153,6 +153,11 @@ public class GameManager : MonoBehaviour
 
     public static void LoadOptionsAdditive()
     {
-        print("LoadOptionsAdditive is not implemented yet");
+        SceneManager.LoadScene("OptionsMenu", LoadSceneMode.Additive);
+    }
+
+    public static void UnloadOptionsMenu()
+    {
+        SceneManager.UnloadSceneAsync("OptionsMenu");
     }
 }
