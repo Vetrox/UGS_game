@@ -59,7 +59,7 @@ public class Level : MonoBehaviour
                 case 'd':
                     Instantiate(floorTileStraight2Prefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
                     Instantiate(floorTileStraight3Prefab, new Vector3(lane, y, z + 2), Quaternion.identity, this.transform);
-                    Instantiate(sawPrefab, new Vector3(lane, y + 3, z), Quaternion.identity, this.transform);
+                    Instantiate(sawPrefab, new Vector3(lane, y + 2.75f, z + 1), sawPrefab.transform.rotation, this.transform);
                     break;
             }
 
