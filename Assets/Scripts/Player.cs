@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     private NextMove nextMove;
     private float slideStart;
     private Rigidbody rigidBody;
+    private Animator animator;
     private bool firstPhysicsMovement = true;
     private bool wasUnderDeadzone = true;
     private bool gameOver = false;
@@ -48,6 +49,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
 
         float beatLength = 60.0f / GameManager.GetCurrentLevel().bpm;
         forwardVelocity = 5.0f / beatLength;
@@ -127,12 +129,12 @@ public class Player : MonoBehaviour
         }
         if (nextMove == NextMove.NONE) return;
         
-
         if (firstPhysicsMovement)
         {
             firstPhysicsMovement = false;
             if (nextMove == NextMove.DOWN) {
-                transform.rotation = Quaternion.AngleAxis(90.0f, Vector3.right);
+                animator.SetTrigger("DuckEntry");
+                print("TRIGGER ANIMATION");
                 slideStart = Time.realtimeSinceStartup;
             } else {
                 var moveVec = MoveToV3(nextMove);
@@ -162,6 +164,7 @@ public class Player : MonoBehaviour
                 break;
             case NextMove.DOWN:
                 should_reset = Time.realtimeSinceStartup > slideStart + maxSlideDuration;
+                animator.SetTrigger("DuckExit");
                 break;
         }
 
