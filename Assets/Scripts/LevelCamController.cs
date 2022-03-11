@@ -19,7 +19,7 @@ public class LevelCamController : MonoBehaviour
         // DisplayFFTCurve(0);
 
         float upperLim = -5;
-        float lowerLim = -10;
+        float lowerLim = -13;
         float delta = Mathf.Abs(lowerLim - upperLim);
         float r = reducedSpectrum[0];
         float g = reducedSpectrum[1];
