@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 81595442}
   - component: {fileID: 81595441}
   - component: {fileID: 81595443}
+  - component: {fileID: 81595444}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -150,11 +151,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 81595439}
   m_LocalRotation: {x: 0.13992289, y: -0, z: -0, w: 0.99016243}
-  m_LocalPosition: {x: 0, y: 2.381, z: -3.347}
+  m_LocalPosition: {x: 0, y: 4.381, z: -2.347}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1537006451}
-  m_RootOrder: 3
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 16.087, y: 0, z: 0}
 --- !u!81 &81595441
 AudioListener:
@@ -219,6 +220,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf2f7681d1a0d9458980b85c0c00fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &81595444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81595439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47ebfd1a5f857d840961588dda2df4f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1537006451}
+  stiffnes: 0.1
 --- !u!1001 &1537006449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -240,7 +255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eca1169badfdeb018a1e1b3a23600e87, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eca1169badfdeb018a1e1b3a23600e87, type: 3}
       propertyPath: m_LocalPosition.x
@@ -508,7 +523,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &1904746599
 PrefabInstance:
@@ -519,7 +534,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1896042046878290460, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1896042046878290460, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
       propertyPath: m_LocalPosition.x
