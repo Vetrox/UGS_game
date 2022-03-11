@@ -113,6 +113,23 @@ public class GameManager : MonoBehaviour
         paused = false;
     }
 
+    public static void ExitLevel()
+    {
+        ResumePhysics();
+        StopCurrentSong();
+        for (int i = 0; i < SceneManager.sceneCount; ++i)
+        {
+            var scene = SceneManager.GetSceneAt(i);
+            if (scene.name.Equals("PauseMenu"))
+            {
+                SceneManager.UnloadSceneAsync("PauseMenu");
+                break;
+            }
+        }
+        paused = false;
+        LoadLevelSelect();
+    }
+
     public static void PauseLevel()
     {
         PausePhysics();
@@ -132,5 +149,15 @@ public class GameManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
         Application.Quit();
+    }
+
+    public static void LoadOptionsAdditive()
+    {
+        SceneManager.LoadScene("OptionsMenu", LoadSceneMode.Additive);
+    }
+
+    public static void UnloadOptionsMenu()
+    {
+        SceneManager.UnloadSceneAsync("OptionsMenu");
     }
 }
