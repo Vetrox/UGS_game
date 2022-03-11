@@ -11,7 +11,6 @@ public class SongListView : MonoBehaviour
 
     [SerializeField] private Transform m_ContentContainer;
     [SerializeField] private Button m_ItemPrefab;
-    [SerializeField] private int m_ItemsToGenerate;
 
     void Start()
     {
