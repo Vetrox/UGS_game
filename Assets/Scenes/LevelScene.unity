@@ -233,6 +233,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1537006451}
+  horizontalDistance: 1.6
+  verticalDistance: 1.6
   stiffnes: 0.1
 --- !u!1001 &1537006449
 PrefabInstance:
@@ -402,7 +404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forceMult: {x: 2, y: 5}
   deadzone: 0.501
-  maxSlideDuration: 0.5
+  maxDuckDuration: 0.5
 --- !u!135 &1537006454
 SphereCollider:
   m_ObjectHideFlags: 0
