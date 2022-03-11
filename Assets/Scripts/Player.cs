@@ -176,6 +176,7 @@ public class Player : MonoBehaviour
                 break;
             case NextMove.DOWN:
                 print(maxDuckDuration);
+                should_reset = Time.realtimeSinceStartup > duckStart + maxDuckDuration;
                 if (should_reset) {
                     animator.SetTrigger("DuckExit");
                     sphereCollider.radius = 0.5f;
