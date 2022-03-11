@@ -16,13 +16,16 @@ public class Player : MonoBehaviour
     public Vector2 forceMult = new Vector2(2, 5);
     [Range(0f, 1f)]
     public float deadzone = 0.25f;
-    public float maxSlideDuration = 0.5f;
+    public float maxDuckDuration = 0.5f;
 
     private Vector2Int lanePos = new Vector2Int(0, 1);
     private NextMove nextMove;
-    private float slideStart;
+    private float duckStart;
+
     private Rigidbody rigidBody;
     private Animator animator;
+    private SphereCollider sphereCollider;
+
     private bool firstPhysicsMovement = true;
     private bool wasUnderDeadzone = true;
     private bool gameOver = false;
@@ -50,6 +53,7 @@ public class Player : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        sphereCollider = GetComponent<SphereCollider>();
 
         float beatLength = 60.0f / GameManager.GetCurrentLevel().bpm;
         forwardVelocity = 5.0f / beatLength;
@@ -134,8 +138,9 @@ public class Player : MonoBehaviour
             firstPhysicsMovement = false;
             if (nextMove == NextMove.DOWN) {
                 animator.SetTrigger("DuckEntry");
-                print("TRIGGER ANIMATION");
-                slideStart = Time.realtimeSinceStartup;
+                sphereCollider.radius = 0.352f;
+                sphereCollider.center = new Vector3(0.0f, 0.352f, 0.0f);
+                duckStart = Time.realtimeSinceStartup;
             } else {
                 var moveVec = MoveToV3(nextMove);
                 rigidBody.velocity = new Vector3(moveVec.x * forceMult.x, moveVec.y * forceMult.y, forwardVelocity);
@@ -163,8 +168,12 @@ public class Player : MonoBehaviour
                 should_reset = nextPos.x < lanePos.x;
                 break;
             case NextMove.DOWN:
-                should_reset = Time.realtimeSinceStartup > slideStart + maxSlideDuration;
-                animator.SetTrigger("DuckExit");
+                should_reset = Time.realtimeSinceStartup > duckStart + maxDuckDuration;
+                if (should_reset) {
+                    animator.SetTrigger("DuckExit");
+                    sphereCollider.radius = 0.5f;
+                    sphereCollider.center = new Vector3(0.0f, 0.5f, 0.5f);
+                }
                 break;
         }
 
