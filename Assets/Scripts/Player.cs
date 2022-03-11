@@ -104,10 +104,16 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (nextMove == NextMove.UP && collision.collider.CompareTag("FloorTile"))
-        {
+        if (nextMove == NextMove.UP && collision.collider.CompareTag("FloorTile")) {
             nextMove = NextMove.NONE;
             firstPhysicsMovement = true;
+        }    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Saw")) {
+            rigidBody.velocity = Vector3.zero;
+            GameOver();
         }
     }
 
@@ -125,13 +131,14 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (gameOver) return;
-        if (transform.position.y < -1 || rigidBody.velocity.z < forwardVelocity * 0.9)
-        {
+        if (!gameOver && (transform.position.y < -1 || rigidBody.velocity.z < forwardVelocity * 0.9)) {
             GameOver();
             return;
         }
-        if (nextMove == NextMove.NONE) return;
+
+        if (gameOver || nextMove == NextMove.NONE) {
+            return;
+        }
         
         if (firstPhysicsMovement)
         {
@@ -168,6 +175,7 @@ public class Player : MonoBehaviour
                 should_reset = nextPos.x < lanePos.x;
                 break;
             case NextMove.DOWN:
+                print(maxDuckDuration);
                 should_reset = Time.realtimeSinceStartup > duckStart + maxDuckDuration;
                 if (should_reset) {
                     animator.SetTrigger("DuckExit");

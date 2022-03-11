@@ -519,7 +519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forceMult: {x: 2, y: 5}
   deadzone: 0.501
-  maxDuckDuration: 0.5
+  maxDuckDuration: 0.2
 --- !u!135 &1537006454
 SphereCollider:
   m_ObjectHideFlags: 0
