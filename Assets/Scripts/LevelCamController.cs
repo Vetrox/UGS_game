@@ -6,7 +6,7 @@ public class LevelCamController : MonoBehaviour
 {
 
     static float[] spectrum = new float[1024];
-    static float[] reducedSpectrum = new float[4];
+    static float[] reducedSpectrum = new float[3];
 
 
     // Update is called once per frame
@@ -44,11 +44,12 @@ public class LevelCamController : MonoBehaviour
         int samplesPerWindow = spectrum.Length / reducedSpectrum.Length;
         int rest = spectrum.Length % reducedSpectrum.Length;
         int specTop = 0;
-        for (int i = 0, lastI = -1; i < spectrum.Length; lastI = i, i += samplesPerWindow + (rest > 0 ? (--rest)*0 + 1 : 0))
+        for (int i = 0, lastI = -1; i <= spectrum.Length; lastI = i, i += samplesPerWindow + (rest > 0 ? (--rest)*0 + 1 : 0))
         {
             if (lastI < 0) continue;
             reducedSpectrum[specTop++] = Average(spectrum, lastI, i);
         }
+
     }
 
     float Average(float[] arr, int start, int end)
