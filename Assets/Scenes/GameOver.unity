@@ -784,7 +784,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8264255545340326231, guid: 6bc544ad3ca49e8499410bbc2c63d1af, type: 3}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: LoadLevelSelect
+        m_MethodName: ExitLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
