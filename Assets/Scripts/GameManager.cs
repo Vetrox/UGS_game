@@ -150,4 +150,9 @@ public class GameManager : MonoBehaviour
 #endif
         Application.Quit();
     }
+
+    public static void LoadOptionsAdditive()
+    {
+        print("LoadOptionsAdditive is not implemented yet");
+    }
 }
