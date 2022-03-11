@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (!gameOver && Input.GetKeyDown(KeyCode.Escape))
         {
             if (GameManager.IsPaused()) GameManager.ResumeLevel();
             else
