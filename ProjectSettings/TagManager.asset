@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FloorTile
   - Level
+  - Saw
   layers:
   - Default
   - TransparentFX
