@@ -180,7 +180,7 @@ public class Player : MonoBehaviour
                 if (should_reset) {
                     animator.SetTrigger("DuckExit");
                     sphereCollider.radius = 0.5f;
-                    sphereCollider.center = new Vector3(0.0f, 0.5f, 0.5f);
+                    sphereCollider.center = new Vector3(0.0f, 0.5f, 0f);
                 }
                 break;
         }
