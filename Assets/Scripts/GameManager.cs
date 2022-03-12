@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         audioSource = instance.GetComponent<AudioSource>();
-        // QualitySettings.vSyncCount = PersistantSettings.Instance().VSyncEnabled ? 1 : 0;
+        QualitySettings.vSyncCount = PersistantSettings.Instance().VSyncEnabled ? 1 : 0;
         Application.targetFrameRate = PersistantSettings.Instance().FPSCap;
     }
 
