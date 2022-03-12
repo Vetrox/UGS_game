@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +8,7 @@ public class TextInputHandler : MonoBehaviour
     void Start()
     {
         textField = GetComponent<InputField>();
+        textField.text = GameManager.PersistantSettings.Instance().FPSCap.ToString();
     }
 
     void Update()
@@ -23,7 +22,7 @@ public class TextInputHandler : MonoBehaviour
         try {
             int newFPS = int.Parse(textField.text);
             GameManager.PersistantSettings.Instance().FPSCap = newFPS;
-            print("Set the FPS value to " + newFPS);
+            Application.targetFrameRate = newFPS;
         } catch (System.FormatException) {}
     }
 }
