@@ -203,4 +203,14 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.UnloadSceneAsync("OptionsMenu");
     }
+
+    public static void ToggleFullscreen()
+    {
+        var res = Screen.currentResolution;
+        if (Screen.fullScreen) {
+            Screen.SetResolution(res.width, res.height, FullScreenMode.Windowed);
+        } else {
+            Screen.SetResolution(res.width, res.height, FullScreenMode.MaximizedWindow);
+        }
+    }
 }
