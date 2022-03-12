@@ -1,10 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 [RequireComponent(typeof(AudioSource))]
 public class GameManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class PersistantSettings
+    {
+        public int   FPSCap          = 60;
+        public bool  VSyncEnabled    = false;
+
+        private PersistantSettings() { }
+        [System.NonSerialized]
+        private static PersistantSettings instance;
+        [System.NonSerialized]
+        private static readonly string path = Path.Combine(Application.persistentDataPath, "usersettings.json");
+
+        public static PersistantSettings Instance()
+        {
+            if (instance == null)
+                DefaultOrInitFromDisk();
+            return instance;
+        }
+
+        public static void SaveToDisk()
+        {
+            var json = JsonUtility.ToJson(Instance(), true);
+            File.WriteAllText(path, json);
+        }
+
+        private static void DefaultOrInitFromDisk()
+        {
+            if (instance != null) return;
+            try {
+                var settingsFile = File.ReadAllText(path);
+                var loadedSettings = JsonUtility.FromJson<PersistantSettings>(settingsFile);
+                instance = loadedSettings;
+            } catch (System.Exception) {
+                instance = new PersistantSettings();
+            }
+        }
+    }
+
     private static GameManager instance = null;
     private static AudioSource audioSource = null;
 
@@ -19,6 +57,11 @@ public class GameManager : MonoBehaviour
             return;
         }
         instance = this;
+    }
+
+    void OnApplicationQuit()
+    {
+        PersistantSettings.SaveToDisk();
     }
 
     void Start()
