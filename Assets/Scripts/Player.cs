@@ -108,8 +108,6 @@ public class Player : MonoBehaviour
             nextMove = NextMove.NONE;
             firstPhysicsMovement = true;
         }
-
-        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, forwardVelocity);
     }
 
     void OnTriggerEnter(Collider collider)
