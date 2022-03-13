@@ -4,39 +4,63 @@ using UnityEngine;
 
 public class LevelCamController : MonoBehaviour
 {
-
+    [SerializeField] private Material material;
     static float[] spectrum = new float[1024];
     static float[] reducedSpectrum = new float[3];
 
+    private new AudioSource audio; // FIXME (new)
+    void Start()
+    {
+        audio = GameManager.getInstance().GetComponent<AudioSource>();
+    }
 
+
+    private Vector3 last = Vector3.zero;
     // Update is called once per frame
     void Update()
     {
         if (Camera.current == null) return;
-        var audio = GameManager.getInstance().GetComponent<AudioSource>();
+        
         audio.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
         ReduceSpectrum();
         // DisplayFFTCurve(0);
 
-        float upperLim = -5;
-        float lowerLim = -13;
-        float delta = Mathf.Abs(lowerLim - upperLim);
-        float r = reducedSpectrum[0];
-        float g = reducedSpectrum[1];
-        float b = reducedSpectrum[2];
-        r = Mathf.Log(r);
-        g = Mathf.Log(g);
-        b = Mathf.Log(b);
-        r = Mathf.Clamp(r, lowerLim, upperLim) - lowerLim;
-        g = Mathf.Clamp(g, lowerLim, upperLim) - lowerLim;
-        b = Mathf.Clamp(b, lowerLim, upperLim) - lowerLim;
+        var upperLim = -5;
+        var lowerLim = -10;
+        var delta = Mathf.Abs(lowerLim - upperLim);
 
-        
-        r /= delta;
-        g /= delta;
-        b /= delta;
+        var low     = reducedSpectrum[0];
+        var mid     = reducedSpectrum[1];
+        // var high    = reducedSpectrum[2];
+        low = Mathf.Log(low); mid = Mathf.Log(mid); 
+        // high = Mathf.Log(high);
+        low  = Mathf.Clamp(low,  lowerLim, upperLim) - lowerLim;
+        mid  = Mathf.Clamp(mid,  lowerLim, upperLim) - lowerLim;
 
-        Camera.current.backgroundColor = new Color(r, g, b);
+        low /= 5;
+        // high = Mathf.Clamp(high, lowerLim, upperLim) - lowerLim;
+
+        Vector3 lowCol = new Vector3(79, 0, 0) / 255;
+        Vector3 midCol = new Vector3(217, 206, 214) / 255;
+
+        float interp;
+        if (low > mid)
+        {
+            interp = 0;
+        } else
+        {
+            interp = 1;
+        }
+        var l = Vector3.zero;
+        if (Mathf.Max(low, mid) / delta > 0.1)
+        {
+            l = Vector3.Lerp(lowCol, midCol, interp);
+        }
+        l = Vector3.Lerp(last, l, 0.01f);
+        var col = new Color(l.x, l.y, l.z);
+        material.color = col;
+        Camera.current.backgroundColor = col;
+        last = l;
     }
 
     void ReduceSpectrum()

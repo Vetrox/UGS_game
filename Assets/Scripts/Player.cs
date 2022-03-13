@@ -107,12 +107,16 @@ public class Player : MonoBehaviour
         if (nextMove == NextMove.UP && collision.collider.CompareTag("FloorTile")) {
             nextMove = NextMove.NONE;
             firstPhysicsMovement = true;
-        }    }
+        }
+
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, forwardVelocity);
+    }
 
     void OnTriggerEnter(Collider collider)
     {
         if (collider.CompareTag("Saw")) {
             rigidBody.velocity = Vector3.zero;
+            print("Collided with saw");
             GameOver();
         }
     }
@@ -132,6 +136,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         if (!gameOver && (transform.position.y < -1 || rigidBody.velocity.z < forwardVelocity * 0.9)) {
+            print(rigidBody.velocity.z + " expected " + forwardVelocity);
             GameOver();
             return;
         }
@@ -153,7 +158,6 @@ public class Player : MonoBehaviour
                 var moveVec = MoveToV3(nextMove);
                 rigidBody.velocity = new Vector3(moveVec.x * forceMult.x, moveVec.y * forceMult.y, forwardVelocity);
             }
-
             return;
         }
 
@@ -163,11 +167,7 @@ public class Player : MonoBehaviour
         Vector2 curVel = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
         Vector2 nextPos = curPos + curVel * Time.fixedDeltaTime;
 
-        Vector2 diff = curPos - lanePos;
-        Vector2 nextDiff = nextPos - lanePos;
-
-        bool should_reset = false; //  nextDiff.sqrMagnitude > diff.sqrMagnitude;
-
+        bool should_reset = false;
         switch (nextMove) {
             case NextMove.RIGHT:
                 should_reset = nextPos.x > lanePos.x;
@@ -189,7 +189,7 @@ public class Player : MonoBehaviour
         if (should_reset) {
             nextMove = NextMove.NONE;
             firstPhysicsMovement = true;
-            rigidBody.velocity = new Vector3(0, rigidBody.velocity.y, rigidBody.velocity.z);
+            rigidBody.velocity = new Vector3(0, rigidBody.velocity.y, forwardVelocity);
             transform.position = new Vector3(lanePos.x, transform.position.y, transform.position.z);
             transform.rotation = Quaternion.identity;
         }

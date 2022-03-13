@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf2f7681d1a0d9458980b85c0c00fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 0897fd823940c894cb0cdeb0b3bc0181, type: 2}
 --- !u!114 &81595444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,10 +415,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6652725513331149018, guid: eca1169badfdeb018a1e1b3a23600e87, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0897fd823940c894cb0cdeb0b3bc0181, type: 2}
     - target: {fileID: -5477749408508380018, guid: eca1169badfdeb018a1e1b3a23600e87, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5215299815803115452, guid: eca1169badfdeb018a1e1b3a23600e87, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 65b99baad75e55448a40b1d44d4c3ad6, type: 2}
     - target: {fileID: 919132149155446097, guid: eca1169badfdeb018a1e1b3a23600e87, type: 3}
       propertyPath: m_Name
       value: Player
@@ -548,7 +557,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &1716552502
 GameObject:
   m_ObjectHideFlags: 0

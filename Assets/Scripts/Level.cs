@@ -32,10 +32,11 @@ public class Level : MonoBehaviour
     private void cookLevel()
     {
         int lane = 0;
-        int y = 0;
+        float y = 0;
         int z = 0;
 
         foreach (char c in GameManager.GetCurrentLevel().data) {
+            y -= 0.00001f;
             switch (c) {
                 case '-':
                     Instantiate(floorTileStraight2Prefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
