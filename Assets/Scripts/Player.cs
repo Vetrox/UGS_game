@@ -144,6 +144,7 @@ public class Player : MonoBehaviour
         {
             firstPhysicsMovement = false;
             if (nextMove == NextMove.DOWN) {
+                print("DUCK ENTRY!");
                 animator.SetTrigger("DuckEntry");
                 sphereCollider.radius = 0.352f;
                 sphereCollider.center = new Vector3(0.0f, 0.352f, 0.0f);
@@ -175,9 +176,9 @@ public class Player : MonoBehaviour
                 should_reset = nextPos.x < lanePos.x;
                 break;
             case NextMove.DOWN:
-                print(maxDuckDuration);
                 should_reset = Time.realtimeSinceStartup > duckStart + maxDuckDuration;
                 if (should_reset) {
+                    print("DUCK EXIT!");
                     animator.SetTrigger("DuckExit");
                     sphereCollider.radius = 0.5f;
                     sphereCollider.center = new Vector3(0.0f, 0.5f, 0f);
