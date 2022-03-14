@@ -116,6 +116,9 @@ public class Player : MonoBehaviour
             rigidBody.velocity = Vector3.zero;
             print("Collided with saw");
             GameOver();
+        } else if(collider.CompareTag("Goal"))
+        {
+            YouWon();
         }
     }
 
@@ -123,6 +126,19 @@ public class Player : MonoBehaviour
     {
         GameManager.StopCurrentSong();
         SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
+    }
+
+    void LoadYouWonScreen()
+    {
+        GameManager.StopCurrentSong();
+        SceneManager.LoadScene("YouWon", LoadSceneMode.Additive);
+    }
+    
+    void YouWon()
+    {
+        // TODO: save progress immediately here
+        gameOver = true;
+        Invoke("LoadYouWonScreen", 0.5f);
     }
 
     void GameOver()

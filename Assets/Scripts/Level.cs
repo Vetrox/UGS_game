@@ -22,6 +22,7 @@ public class Level : MonoBehaviour
     public Transform floorTileConnectorRL;
     public Transform sawPrefab;
     public Transform pipePrefab;
+    public Transform goalPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -72,5 +73,8 @@ public class Level : MonoBehaviour
 
             z += 5;
         }
+
+        Instantiate(goalPrefab, new Vector3(lane, y+2, z), Quaternion.identity, this.transform);
+        Instantiate(floorTileStraight3Prefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
     }
 }
