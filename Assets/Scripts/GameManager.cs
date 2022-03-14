@@ -147,10 +147,11 @@ public class GameManager : MonoBehaviour
 
     public static void StartGameplay()
     {
+        PlayCurrentSong();
+        ResumePhysics();
         paused = false;
         gameOver = false;
-        ResumePhysics();
-        PlayCurrentSong();
+        lastPercentage = 0;
     }
 
     public static void LoadLevelSelect()
@@ -194,7 +195,6 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
-        paused = false;
         LoadLevelSelect();
     }
 

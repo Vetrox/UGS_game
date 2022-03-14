@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     [SerializeField] private Text   levelText;
+    [SerializeField] private Text   timeToStart;
     [SerializeField] private Text   sliderText;
     [SerializeField] private Slider slider;
 
@@ -28,11 +29,15 @@ public class HUD : MonoBehaviour
 
         if (!started)
         {
-            var now = Time.realtimeSinceStartup;
-            if (now - start > 2)
+            var tts = -2 + (Time.realtimeSinceStartup - start);
+            if (tts >= 0)
             {
                 GameManager.StartGameplay();
+                timeToStart.text = "";
                 started = true;
+            } else
+            {
+                timeToStart.text = tts.ToString("0.00", CultureInfo.InvariantCulture);
             }
         }
 
