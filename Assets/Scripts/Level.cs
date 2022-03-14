@@ -35,7 +35,10 @@ public class Level : MonoBehaviour
     {
         int lane = 0;
         float y = 0;
-        int z = 0;
+        int z = -3;
+        Instantiate(floorTileStraight3Prefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
+        z += 3;
+        y -= 0.00001f;
 
         foreach (char c in GameManager.GetCurrentLevel().data) {
             y -= 0.00001f;
