@@ -50,3 +50,4 @@ MonoBehaviour:
   floorTileConnectorLR: {fileID: 6821640526358878760, guid: cb53e57c80893ce88871613e66de5c2f, type: 3}
   floorTileConnectorRL: {fileID: 4051874684099019134, guid: 357b1be2ad68fd3ab8794be1e58caf80, type: 3}
   sawPrefab: {fileID: 6694000137219553482, guid: a597f2b774599deaebd23e49b4ca818a, type: 3}
+  pipePrefab: {fileID: 7282897922530503552, guid: 95d3295a59bf94c2886eff542e9a69f1, type: 3}

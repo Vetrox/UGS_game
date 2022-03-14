@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee6cc2f0596b0e28b9874410c2c1022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceMult: {x: 6, y: 5}
+  forceMult: {x: 6, y: 8}
   deadzone: 0.501
   maxDuckDuration: 0.2
 --- !u!135 &1537006454
