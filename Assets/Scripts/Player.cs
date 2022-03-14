@@ -54,7 +54,6 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         sphereCollider = GetComponent<SphereCollider>();
 
-        GameManager.gameOver = false;
         float beatLength = 60.0f / GameManager.GetCurrentLevel().bpm;
         forwardVelocity = 5.0f / beatLength;
         rigidBody.velocity = Vector3.forward * forwardVelocity;
@@ -112,11 +111,11 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.CompareTag("Saw")) {
+        if (!GameManager.gameOver && collider.CompareTag("Saw")) {
             rigidBody.velocity = Vector3.zero;
             print("Collided with saw");
             GameOver();
-        } else if(collider.CompareTag("Goal"))
+        } else if(!GameManager.gameOver && collider.CompareTag("Goal"))
         {
             YouWon();
         }
