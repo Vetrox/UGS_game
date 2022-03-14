@@ -46,7 +46,8 @@ public class GameManager : MonoBehaviour
     private static GameManager instance = null;
     private static AudioSource audioSource = null;
 
-    private static bool paused = false; // only used in Player
+    private static bool paused = false; // true, when the music and the game is paused
+    public static bool gameOver = false; // true, when we are about to display the gameoverscreen but the level is still loading.
 
     void Awake()
     {
@@ -69,6 +70,12 @@ public class GameManager : MonoBehaviour
         audioSource = instance.GetComponent<AudioSource>();
         QualitySettings.vSyncCount = PersistantSettings.Instance().VSyncEnabled ? 1 : 0;
         Application.targetFrameRate = PersistantSettings.Instance().FPSCap;
+    }
+
+    void Update()
+    {
+        if (audioSource && audioSource.clip && !IsPaused() && !gameOver)
+            lastPercentage = audioSource.time * 100 / audioSource.clip.length;
     }
 
     public static GameManager getInstance()
@@ -96,6 +103,13 @@ public class GameManager : MonoBehaviour
         );
     }
 
+    private static float lastPercentage = 0;
+    public static float GetCurrentLevelPercentage()
+    {
+        return lastPercentage;
+    }
+
+
     public static void PlayCurrentSong()
     {
         audioSource.clip = currentSong;
@@ -122,10 +136,27 @@ public class GameManager : MonoBehaviour
         var activeScene = SceneManager.GetActiveScene();
         if (activeScene.name.Equals("LevelScene"))
         {
-            paused = false;
+            PrepareLevel();
             SceneManager.LoadScene(activeScene.buildIndex);
+        } else
+        {
+            print("active scene: " + activeScene.name);
+            throw new System.Exception("unreachable");
         }
+    }
+
+    public static void LoadLevel(LevelFile level)
+    {
+        SetActiveLevel(level);
+        PrepareLevel();
+        SceneManager.LoadScene("LevelScene");
         
+    }
+    private static void PrepareLevel()
+    {
+        paused = false;
+        gameOver = false;
+        lastPercentage = 0;
     }
 
     public static void LoadLevelSelect()
