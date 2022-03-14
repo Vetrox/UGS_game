@@ -37,7 +37,7 @@ public class LevelCamController : MonoBehaviour
         low  = Mathf.Clamp(low,  lowerLim, upperLim) - lowerLim;
         mid  = Mathf.Clamp(mid,  lowerLim, upperLim) - lowerLim;
 
-        low /= 5;
+        low /= 3;
         // high = Mathf.Clamp(high, lowerLim, upperLim) - lowerLim;
 
         Vector3 lowCol = new Vector3(79, 0, 0) / 255;
@@ -56,7 +56,13 @@ public class LevelCamController : MonoBehaviour
         {
             l = Vector3.Lerp(lowCol, midCol, interp);
         }
-        l = Vector3.Lerp(last, l, 0.01f);
+        if (l.sqrMagnitude > last.sqrMagnitude)
+        {
+            l = Vector3.Lerp(last, l, 1f);
+        } else
+        {
+            l = Vector3.Lerp(last, l, 0.01f);
+        }
         var col = new Color(l.x, l.y, l.z);
         material.color = col;
         Camera.current.backgroundColor = col;
