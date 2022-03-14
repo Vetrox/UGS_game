@@ -40,7 +40,11 @@ public class SongListView : MonoBehaviour
         item_go.transform.localScale = Vector2.one;
 
         item_go.GetComponent<Button>().onClick
-            .AddListener(new UnityAction(() => GameManager.LoadLevel(level)));
+            .AddListener(new UnityAction(() =>
+            {
+                GameManager.SetActiveLevel(level);
+                GameManager.LoadLevel();
+            }));
     }
 
     

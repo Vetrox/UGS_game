@@ -131,32 +131,26 @@ public class GameManager : MonoBehaviour
         audioSource.Stop();
     }
 
-    public static void ReloadLevel()
+    public static void LoadLevel()
     {
-        var activeScene = SceneManager.GetActiveScene();
-        if (activeScene.name.Equals("LevelScene"))
-        {
-            PrepareLevel();
-            SceneManager.LoadScene(activeScene.buildIndex);
-        } else
-        {
-            print("active scene: " + activeScene.name);
-            throw new System.Exception("unreachable");
-        }
+        PrepareLevel();
+        SceneManager.LoadScene("LevelScene"); 
     }
 
-    public static void LoadLevel(LevelFile level)
-    {
-        SetActiveLevel(level);
-        PrepareLevel();
-        SceneManager.LoadScene("LevelScene");
-        
-    }
     private static void PrepareLevel()
+    {
+        paused = true;
+        gameOver = true;
+        lastPercentage = 0;
+        PausePhysics();
+    }
+
+    public static void StartGameplay()
     {
         paused = false;
         gameOver = false;
-        lastPercentage = 0;
+        ResumePhysics();
+        PlayCurrentSong();
     }
 
     public static void LoadLevelSelect()

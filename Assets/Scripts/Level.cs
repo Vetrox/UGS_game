@@ -28,7 +28,6 @@ public class Level : MonoBehaviour
     void Start()
     {
         cookLevel();
-        GameManager.PlayCurrentSong();
     }
 
     private void cookLevel()
