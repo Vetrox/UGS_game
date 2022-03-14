@@ -32,7 +32,7 @@ public class SongListView : MonoBehaviour
 
     void setupEntry(string id)
     {
-        var level = GameManager.LoadLevel(id);
+        var level = GameManager.LoadLevelFile(id);
 
         var item_go = Instantiate(m_ItemPrefab);
         item_go.GetComponentInChildren<Text>().text = level.displayName;

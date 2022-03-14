@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
         currentSong = Resources.Load<AudioClip>(currentLevel.path);
     }
 
-    public static LevelFile LoadLevel(string id)
+    public static LevelFile LoadLevelFile(string id)
     {
         return JsonUtility.FromJson<LevelFile>(
            Resources.Load<TextAsset>("Levels/" + id).text
