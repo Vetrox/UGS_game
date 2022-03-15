@@ -1,0 +1,2 @@
+- ./Assets/Resources/Sounds/laser_shot.wav (bubaproducer/CC BY 3.0)
+    - https://freesound.org/people/bubaproducer/sounds/151022/

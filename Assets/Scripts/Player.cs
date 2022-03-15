@@ -16,7 +16,13 @@ public class Player : MonoBehaviour
     public Vector2 forceMult = new Vector2(2, 5);
     [Range(0f, 1f)]
     public float deadzone = 0.25f;
-    public float maxDuckDuration = 0.5f;
+    public float duckDuration = 0.5f;
+
+    private float shootingCooldown;
+    public float shootingDelay;
+    public Transform bulletPrefab;
+
+    private AudioSource laserShootSound;
 
     private Vector2Int lanePos = new Vector2Int(0, 1);
     private NextMove nextMove;
@@ -24,6 +30,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody rigidBody;
     private Animator animator;
+    private Animator barrelAnimator;
     private SphereCollider sphereCollider;
 
     private bool firstPhysicsMovement = true;
@@ -52,11 +59,21 @@ public class Player : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        barrelAnimator = GetComponentsInChildren<Animator>()[1]; // skip the parent
         sphereCollider = GetComponent<SphereCollider>();
+        laserShootSound = GetComponent<AudioSource>();
 
         float beatLength = 60.0f / GameManager.GetCurrentLevel().bpm;
         forwardVelocity = 5.0f / beatLength;
         rigidBody.velocity = Vector3.forward * forwardVelocity;
+    }
+
+    void Shoot()
+    {
+        Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        shootingCooldown = Time.realtimeSinceStartup + shootingDelay;
+        barrelAnimator.SetTrigger("Shoot");
+        laserShootSound.Play();
     }
 
     // Update is called once per frame
@@ -70,6 +87,11 @@ public class Player : MonoBehaviour
                 GameManager.PauseLevel();
                 return;
             }
+        }
+
+        // shooting happens independently of movement, albeit with a certain cooldown period
+        if (Time.realtimeSinceStartup > shootingCooldown && Input.GetKeyDown(KeyCode.Space)) {
+            Shoot();
         }
 
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -162,7 +184,6 @@ public class Player : MonoBehaviour
         {
             firstPhysicsMovement = false;
             if (nextMove == NextMove.DOWN) {
-                print("DUCK ENTRY!");
                 animator.SetTrigger("DuckEntry");
                 sphereCollider.radius = 0.352f;
                 sphereCollider.center = new Vector3(0.0f, 0.352f, 0.0f);
@@ -189,9 +210,8 @@ public class Player : MonoBehaviour
                 should_reset = nextPos.x < lanePos.x;
                 break;
             case NextMove.DOWN:
-                should_reset = Time.realtimeSinceStartup > duckStart + maxDuckDuration;
+                should_reset = Time.realtimeSinceStartup > duckStart + duckDuration;
                 if (should_reset) {
-                    print("DUCK EXIT!");
                     animator.SetTrigger("DuckExit");
                     sphereCollider.radius = 0.5f;
                     sphereCollider.center = new Vector3(0.0f, 0.5f, 0f);
