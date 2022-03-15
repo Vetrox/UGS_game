@@ -1,2 +1,5 @@
 - ./Assets/Resources/Sounds/laser_shot.wav (bubaproducer/CC BY 3.0)
     - https://freesound.org/people/bubaproducer/sounds/151022/
+- [Wintergatan Music](https://wintergatan.net/)
+- Source Sans Pro and Source Code Pro Fonts (OFL): Copyright 2010, 2012, 2014 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name ‘Source’.
+- Future Techno Italic Font: Freeware, Non-Commercial https://www.fontspace.com/future-techno-italic-font-f47017
