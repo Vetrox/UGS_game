@@ -260,4 +260,9 @@ public class GameManager : MonoBehaviour
             Screen.SetResolution(res.width, res.height, FullScreenMode.MaximizedWindow);
         }
     }
+
+    public static void LoadCreditsAdditive()
+    {
+        SceneManager.LoadScene("CreditsScene", LoadSceneMode.Additive);
+    }
 }
