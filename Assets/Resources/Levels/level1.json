@@ -1,5 +1,7 @@
 {
+    "id": "sommar",
     "displayName": "Sommarfågel",
+    "interpret": "Wintergatan",
     "bpm": 120,
     "start_offset": 0.5,
     "path": "Music\\Sommarfågel",

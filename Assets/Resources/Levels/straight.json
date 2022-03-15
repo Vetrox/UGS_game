@@ -1,5 +1,7 @@
 {
+    "id": "straight",
     "displayName": "Straight line",
+    "interpret": "nobody",
     "bpm": 90,
     "start_offset": 0,
     "path": "Music\\Sommarfågel",

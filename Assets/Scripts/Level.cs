@@ -5,7 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class LevelFile
 {
+    public string id;
     public string displayName;
+    public string interpret;
     public int bpm;
     public float start_offset; // in seconds
     public string path;

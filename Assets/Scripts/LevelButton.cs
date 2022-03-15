@@ -11,7 +11,7 @@ public class LevelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
-        songInfoText.text = $"{levelFile.displayName}\n" +
+        songInfoText.text = $"{levelFile.displayName} by {levelFile.interpret}\n" +
             $"{levelFile.bpm}";
         GameManager.SetActiveLevel(levelFile);
         GameManager.PlayCurrentSong(0);
