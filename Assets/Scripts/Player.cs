@@ -216,9 +216,10 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (GameManager.gameOver || nextMove == NextMove.NONE) {
-            return;
-        }
+        if (GameManager.gameOver) return;
+
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, forwardVelocity);
+        if (nextMove == NextMove.NONE) return;
         
         if (firstPhysicsMovement)
         {
@@ -234,8 +235,6 @@ public class Player : MonoBehaviour
             }
             return;
         }
-
-        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, forwardVelocity);
 
         Vector2 curPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 curVel = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
