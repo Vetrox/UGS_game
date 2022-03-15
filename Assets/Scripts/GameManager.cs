@@ -110,10 +110,10 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public static void PlayCurrentSong()
+    public static void PlayCurrentSong(float offset)
     {
         audioSource.clip = currentSong;
-        audioSource.PlayDelayed(currentLevel.start_offset);
+        audioSource.PlayDelayed(offset);
     }
 
     public static void PauseCurrentSong()
@@ -139,6 +139,13 @@ public class GameManager : MonoBehaviour
 
     private static void PrepareLevel()
     {
+        if (audioSource)
+        {
+            audioSource.Stop();
+            audioSource.clip = null;
+            audioSource.time = 0;
+            audioSource.timeSamples = 0;
+        }
         paused = true;
         gameOver = true;
         lastPercentage = 0;
@@ -147,7 +154,6 @@ public class GameManager : MonoBehaviour
 
     public static void StartGameplay()
     {
-        PlayCurrentSong();
         ResumePhysics();
         paused = false;
         gameOver = false;
