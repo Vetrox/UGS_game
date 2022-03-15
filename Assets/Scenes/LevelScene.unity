@@ -528,7 +528,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forceMult: {x: 6, y: 8}
   deadzone: 0.501
-  maxDuckDuration: 0.2
+  duckDuration: 0.2
+  shootingDelay: 0.5
+  bulletPrefab: {fileID: 2527271719917648249, guid: 056f7432568f9a6cc80928bf2aa20ec7, type: 3}
 --- !u!135 &1537006454
 SphereCollider:
   m_ObjectHideFlags: 0

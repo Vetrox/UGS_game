@@ -16,7 +16,11 @@ public class Player : MonoBehaviour
     public Vector2 forceMult = new Vector2(2, 5);
     [Range(0f, 1f)]
     public float deadzone = 0.25f;
-    public float maxDuckDuration = 0.5f;
+    public float duckDuration = 0.5f;
+
+    private float shootingCooldown;
+    public float shootingDelay;
+    public Transform bulletPrefab;
 
     private Vector2Int lanePos = new Vector2Int(0, 1);
     private NextMove nextMove;
@@ -60,6 +64,13 @@ public class Player : MonoBehaviour
         rigidBody.velocity = Vector3.forward * forwardVelocity;
     }
 
+    void Shoot()
+    {
+        Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        shootingCooldown = Time.realtimeSinceStartup + shootingDelay;
+        animator.SetTrigger("Shoot");
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -71,6 +82,11 @@ public class Player : MonoBehaviour
                 GameManager.PauseLevel();
                 return;
             }
+        }
+
+        // shooting happens independently of movement, albeit with a certain cooldown period
+        if (Time.realtimeSinceStartup > shootingCooldown && Input.GetKeyDown(KeyCode.Space)) {
+            Shoot();
         }
 
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -174,7 +190,7 @@ public class Player : MonoBehaviour
                 should_reset = nextPos.x < lanePos.x;
                 break;
             case NextMove.DOWN:
-                should_reset = Time.realtimeSinceStartup > duckStart + maxDuckDuration;
+                should_reset = Time.realtimeSinceStartup > duckStart + duckDuration;
                 if (should_reset) {
                     print("DUCK EXIT!");
                     animator.SetTrigger("DuckExit");
