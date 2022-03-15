@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,10 +7,24 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [System.Serializable]
+    public struct Pair
+    {
+        public string id;
+        public float percentage;
+
+        public Pair(string id, float percentage)
+        {
+            this.id = id;
+            this.percentage = percentage;
+        }
+    }
+    [System.Serializable]
     public class PersistantSettings
     {
         public int   FPSCap          = 60;
         public bool  VSyncEnabled    = false;
+
+        public List<Pair> highScores = new List<Pair>(); // level.id -> percentage completion
 
         private PersistantSettings() { }
         [System.NonSerialized]
