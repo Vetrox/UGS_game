@@ -11,12 +11,13 @@ public class LevelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
-        songInfoText.text = levelFile.displayName;
+        songInfoText.text = $"{levelFile.displayName}\n" +
+            $"{levelFile.bpm}";
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
-        // not used
+        songInfoText.text = "";
     }
 
 }
