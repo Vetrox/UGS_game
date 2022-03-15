@@ -5,12 +5,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class SongListView : MonoBehaviour
 {
 
     [SerializeField] private Transform m_ContentContainer;
-    [SerializeField] private Button m_ItemPrefab;
+    [SerializeField] private GameObject m_ItemPrefab;
+    [SerializeField] private Text m_songInfoText;
 
     void Start()
     {
@@ -39,6 +41,10 @@ public class SongListView : MonoBehaviour
         item_go.transform.SetParent(m_ContentContainer);
         item_go.transform.localScale = Vector2.one;
 
+        LevelButton btn = item_go.GetComponent<LevelButton>();
+        btn.levelFile = level;
+        btn.songInfoText = m_songInfoText;
+
         item_go.GetComponent<Button>().onClick
             .AddListener(new UnityAction(() =>
             {
@@ -46,6 +52,4 @@ public class SongListView : MonoBehaviour
                 GameManager.LoadLevel();
             }));
     }
-
-    
 }
