@@ -13,11 +13,14 @@ public class LevelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         songInfoText.text = $"{levelFile.displayName}\n" +
             $"{levelFile.bpm}";
+        GameManager.SetActiveLevel(levelFile);
+        GameManager.PlayCurrentSong(0);
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
         songInfoText.text = "";
+        GameManager.StopCurrentSong();
     }
 
 }

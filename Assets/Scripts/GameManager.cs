@@ -128,7 +128,8 @@ public class GameManager : MonoBehaviour
 
     public static void StopCurrentSong()
     {
-        audioSource.Stop();
+        if (audioSource)
+            audioSource.Stop();
     }
 
     public static void LoadLevel()
