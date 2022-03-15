@@ -22,19 +22,22 @@ public class Level : MonoBehaviour
     public Transform floorTileConnectorRL;
     public Transform sawPrefab;
     public Transform pipePrefab;
+    public Transform goalPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
         cookLevel();
-        GameManager.PlayCurrentSong();
     }
 
     private void cookLevel()
     {
         int lane = 0;
         float y = 0;
-        int z = 0;
+        int z = -3;
+        Instantiate(floorTileStraight3Prefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
+        z += 3;
+        y -= 0.00001f;
 
         foreach (char c in GameManager.GetCurrentLevel().data) {
             y -= 0.00001f;
@@ -72,5 +75,8 @@ public class Level : MonoBehaviour
 
             z += 5;
         }
+
+        Instantiate(goalPrefab, new Vector3(lane, y+2, z), Quaternion.identity, this.transform);
+        Instantiate(floorTileStraight3Prefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
     }
 }

@@ -46,7 +46,8 @@ public class GameManager : MonoBehaviour
     private static GameManager instance = null;
     private static AudioSource audioSource = null;
 
-    private static bool paused = false; // only used in Player
+    private static bool paused = false; // true, when the music and the game is paused
+    public static bool gameOver = false; // true, when we are about to display the gameoverscreen but the level is still loading.
 
     void Awake()
     {
@@ -71,6 +72,12 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = PersistantSettings.Instance().FPSCap;
     }
 
+    void Update()
+    {
+        if (audioSource && audioSource.clip && !IsPaused() && !gameOver)
+            lastPercentage = audioSource.time * 100 / audioSource.clip.length;
+    }
+
     public static GameManager getInstance()
     {
         return instance;
@@ -89,12 +96,19 @@ public class GameManager : MonoBehaviour
         currentSong = Resources.Load<AudioClip>(currentLevel.path);
     }
 
-    public static LevelFile LoadLevel(string id)
+    public static LevelFile LoadLevelFile(string id)
     {
         return JsonUtility.FromJson<LevelFile>(
            Resources.Load<TextAsset>("Levels/" + id).text
         );
     }
+
+    private static float lastPercentage = 0;
+    public static float GetCurrentLevelPercentage()
+    {
+        return lastPercentage;
+    }
+
 
     public static void PlayCurrentSong()
     {
@@ -117,15 +131,27 @@ public class GameManager : MonoBehaviour
         audioSource.Stop();
     }
 
-    public static void ReloadLevel()
+    public static void LoadLevel()
     {
-        var activeScene = SceneManager.GetActiveScene();
-        if (activeScene.name.Equals("LevelScene"))
-        {
-            paused = false;
-            SceneManager.LoadScene(activeScene.buildIndex);
-        }
-        
+        PrepareLevel();
+        SceneManager.LoadScene("LevelScene"); 
+    }
+
+    private static void PrepareLevel()
+    {
+        paused = true;
+        gameOver = true;
+        lastPercentage = 0;
+        PausePhysics();
+    }
+
+    public static void StartGameplay()
+    {
+        PlayCurrentSong();
+        ResumePhysics();
+        paused = false;
+        gameOver = false;
+        lastPercentage = 0;
     }
 
     public static void LoadLevelSelect()
@@ -169,7 +195,6 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
-        paused = false;
         LoadLevelSelect();
     }
 

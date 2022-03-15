@@ -32,8 +32,7 @@ public class Player : MonoBehaviour
 
     private bool firstPhysicsMovement = true;
     private bool wasUnderDeadzone = true;
-    private bool gameOver = false;
-
+   
     private float forwardVelocity;
 
     Vector3 MoveToV3(NextMove move)
@@ -74,7 +73,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!gameOver && Input.GetKeyDown(KeyCode.Escape))
+        if (!GameManager.gameOver && Input.GetKeyDown(KeyCode.Escape))
         {
             if (GameManager.IsPaused()) GameManager.ResumeLevel();
             else
@@ -128,10 +127,13 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.CompareTag("Saw")) {
+        if (!GameManager.gameOver && collider.CompareTag("Saw")) {
             rigidBody.velocity = Vector3.zero;
             print("Collided with saw");
             GameOver();
+        } else if(!GameManager.gameOver && collider.CompareTag("Goal"))
+        {
+            YouWon();
         }
     }
 
@@ -141,21 +143,34 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("GameOver", LoadSceneMode.Additive);
     }
 
+    void LoadYouWonScreen()
+    {
+        GameManager.StopCurrentSong();
+        SceneManager.LoadScene("YouWon", LoadSceneMode.Additive);
+    }
+    
+    void YouWon()
+    {
+        // TODO: save progress immediately here
+        GameManager.gameOver = true;
+        Invoke("LoadYouWonScreen", 0.5f);
+    }
+
     void GameOver()
     {
-        gameOver = true;
+        GameManager.gameOver = true;
         Invoke("LoadGameOverScreen", 1);
     }
 
     void FixedUpdate()
     {
-        if (!gameOver && (transform.position.y < -1 || rigidBody.velocity.z < forwardVelocity * 0.9)) {
+        if (!GameManager.gameOver && (transform.position.y < -1 || rigidBody.velocity.z < forwardVelocity * 0.9)) {
             print(rigidBody.velocity.z + " expected " + forwardVelocity);
             GameOver();
             return;
         }
 
-        if (gameOver || nextMove == NextMove.NONE) {
+        if (GameManager.gameOver || nextMove == NextMove.NONE) {
             return;
         }
         

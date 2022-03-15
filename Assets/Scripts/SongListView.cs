@@ -32,7 +32,7 @@ public class SongListView : MonoBehaviour
 
     void setupEntry(string id)
     {
-        var level = GameManager.LoadLevel(id);
+        var level = GameManager.LoadLevelFile(id);
 
         var item_go = Instantiate(m_ItemPrefab);
         item_go.GetComponentInChildren<Text>().text = level.displayName;
@@ -40,12 +40,12 @@ public class SongListView : MonoBehaviour
         item_go.transform.localScale = Vector2.one;
 
         item_go.GetComponent<Button>().onClick
-            .AddListener(new UnityAction(() => LoadLevel(level)));
+            .AddListener(new UnityAction(() =>
+            {
+                GameManager.SetActiveLevel(level);
+                GameManager.LoadLevel();
+            }));
     }
 
-    void LoadLevel(LevelFile level)
-    {
-        GameManager.SetActiveLevel(level);
-        SceneManager.LoadScene("LevelScene");
-    }
+    
 }
