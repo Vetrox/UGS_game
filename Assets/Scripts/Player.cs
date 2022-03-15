@@ -22,12 +22,15 @@ public class Player : MonoBehaviour
     public float shootingDelay;
     public Transform bulletPrefab;
 
+    private AudioSource laserShootSound;
+
     private Vector2Int lanePos = new Vector2Int(0, 1);
     private NextMove nextMove;
     private float duckStart;
 
     private Rigidbody rigidBody;
     private Animator animator;
+    private Animator barrelAnimator;
     private SphereCollider sphereCollider;
 
     private bool firstPhysicsMovement = true;
@@ -56,7 +59,9 @@ public class Player : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        barrelAnimator = GetComponentsInChildren<Animator>()[1]; // skip the parent
         sphereCollider = GetComponent<SphereCollider>();
+        laserShootSound = GetComponent<AudioSource>();
 
         float beatLength = 60.0f / GameManager.GetCurrentLevel().bpm;
         forwardVelocity = 5.0f / beatLength;
@@ -67,7 +72,8 @@ public class Player : MonoBehaviour
     {
         Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         shootingCooldown = Time.realtimeSinceStartup + shootingDelay;
-        animator.SetTrigger("Shoot");
+        barrelAnimator.SetTrigger("Shoot");
+        laserShootSound.Play();
     }
 
     // Update is called once per frame
@@ -178,7 +184,6 @@ public class Player : MonoBehaviour
         {
             firstPhysicsMovement = false;
             if (nextMove == NextMove.DOWN) {
-                print("DUCK ENTRY!");
                 animator.SetTrigger("DuckEntry");
                 sphereCollider.radius = 0.352f;
                 sphereCollider.center = new Vector3(0.0f, 0.352f, 0.0f);
@@ -207,7 +212,6 @@ public class Player : MonoBehaviour
             case NextMove.DOWN:
                 should_reset = Time.realtimeSinceStartup > duckStart + duckDuration;
                 if (should_reset) {
-                    print("DUCK EXIT!");
                     animator.SetTrigger("DuckExit");
                     sphereCollider.radius = 0.5f;
                     sphereCollider.center = new Vector3(0.0f, 0.5f, 0f);
