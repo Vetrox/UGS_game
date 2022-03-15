@@ -46,6 +46,7 @@ MonoBehaviour:
   floorTileStraight2Prefab: {fileID: 3594842391253084415, guid: 872d209139afdedaba82e984fd32eea9, type: 3}
   floorTileStraight3Prefab: {fileID: 4386203646534382709, guid: 7e9e2cadb3fbab0ab8cdf16e6a7b39e7, type: 3}
   floorTileStraight4Prefab: {fileID: 5745830676022553615, guid: 491ac5632c6176ad9bef015634a17a1b, type: 3}
+  floorTileStraight5Prefab: {fileID: 4225900350656758962, guid: 0790bff880dbbcb939fff19d715470bd, type: 3}
   floorTileConnectorU: {fileID: 1418485044967873970, guid: eaec53ed3858d800699d93764b0e2cc1, type: 3}
   floorTileConnectorLR: {fileID: 6821640526358878760, guid: cb53e57c80893ce88871613e66de5c2f, type: 3}
   floorTileConnectorRL: {fileID: 4051874684099019134, guid: 357b1be2ad68fd3ab8794be1e58caf80, type: 3}
