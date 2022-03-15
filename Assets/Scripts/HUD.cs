@@ -18,7 +18,7 @@ public class HUD : MonoBehaviour
     private float gameplayDelay = 2;
     void Start()
     {
-        levelText.text = GameManager.GetCurrentLevel().displayName;
+        levelText.text = $"{GameManager.GetCurrentLevel().displayName} by {GameManager.GetCurrentLevel().interpret}";
         var musicDelay = gameplayDelay - GameManager.GetCurrentLevel().start_offset;
         GameManager.PlayCurrentSong(musicDelay);
         start = Time.realtimeSinceStartup;

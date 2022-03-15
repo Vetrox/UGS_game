@@ -171,16 +171,39 @@ public class Player : MonoBehaviour
         GameManager.StopCurrentSong();
         SceneManager.LoadScene("YouWon", LoadSceneMode.Additive);
     }
-    
+
     void YouWon()
     {
-        // TODO: save progress immediately here
+        SavePercentage();
         GameManager.gameOver = true;
         Invoke("LoadYouWonScreen", 0.5f);
+    }
+    
+    void SavePercentage()
+    { // a combination of serialization and bad api lead to this junk of code.
+        var highScores = GameManager.PersistantSettings.Instance().highScores.ToArray();
+        for (int i = 0; i < highScores.Length; ++i)
+        {
+            if (highScores[i].id.Equals(GameManager.GetCurrentLevel().id))
+            {
+                if (highScores[i].percentage < GameManager.GetCurrentLevelPercentage())
+                {
+                    highScores[i].percentage = GameManager.GetCurrentLevelPercentage();
+                }
+                GameManager.PersistantSettings.Instance().highScores = new List<GameManager.Pair>(highScores);
+                return;
+            }
+        }
+
+        GameManager.PersistantSettings.Instance().highScores.Add(
+            new GameManager.Pair(GameManager.GetCurrentLevel().id,
+            GameManager.GetCurrentLevelPercentage()
+        ));
     }
 
     void GameOver()
     {
+        SavePercentage();
         GameManager.gameOver = true;
         Invoke("LoadGameOverScreen", 1);
     }
