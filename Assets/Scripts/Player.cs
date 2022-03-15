@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
         rigidBody.velocity = Vector3.forward * forwardVelocity;
 
         // sidewards velocity from bpm (should take 1/8 beatLength)
-        sidewardVelocity = 1.0f / beatLength;
+        sidewardVelocity = 4.0f / beatLength;
 
         // gravity and upwards velocity from bpm
         // i have no idea how or why this formula works, but it does, so don't touch it
