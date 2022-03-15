@@ -111,7 +111,7 @@ public class Level : MonoBehaviour
             indices.Add(vertices.Count +  1 - 12);
             indices.Add(vertices.Count +  7 - 12);
             indices.Add(vertices.Count + 10 - 12);
-            indices.Add(vertices.Count +  7 - 12);
+            indices.Add(vertices.Count +  1 - 12);
             indices.Add(vertices.Count + 10 - 12);
             indices.Add(vertices.Count +  5 - 12);
             indices.Add(vertices.Count +  8 - 12);
@@ -141,10 +141,10 @@ public class Level : MonoBehaviour
             indices.Add(vertices.Count +  6 - 12);
             indices.Add(vertices.Count +  7 - 12);
             indices.Add(vertices.Count +  0 - 12);
-            indices.Add(vertices.Count +  6 - 12);
-            indices.Add(vertices.Count +  1 - 12);
             indices.Add(vertices.Count +  0 - 12);
             indices.Add(vertices.Count +  7 - 12);
+            indices.Add(vertices.Count +  1 - 12);
+            indices.Add(vertices.Count +  7 - 12);
             indices.Add(vertices.Count +  9 - 12);
             indices.Add(vertices.Count +  5 - 12);
             indices.Add(vertices.Count +  5 - 12);
@@ -170,7 +170,7 @@ public class Level : MonoBehaviour
             indices.Add(vertices.Count +  3 - 12);
             indices.Add(vertices.Count +  4 - 12);
             indices.Add(vertices.Count +  5 - 12);
-            indices.Add(vertices.Count + 11 - 12);
+            indices.Add(vertices.Count + 10 - 12);
             indices.Add(vertices.Count +  4 - 12);
             indices.Add(vertices.Count + 10 - 12);
             indices.Add(vertices.Count + 11 - 12);
@@ -189,9 +189,9 @@ public class Level : MonoBehaviour
             indices.Add(vertices.Count +  1 - 12);
             indices.Add(vertices.Count +  4 - 12);
             indices.Add(vertices.Count +  2 - 12);
-            indices.Add(vertices.Count +  1 - 12);
-            indices.Add(vertices.Count +  5 - 12);
             indices.Add(vertices.Count +  2 - 12);
+            indices.Add(vertices.Count +  4 - 12);
+            indices.Add(vertices.Count +  5 - 12);
             indices.Add(vertices.Count +  3 - 12);
             indices.Add(vertices.Count +  5 - 12);
             indices.Add(vertices.Count +  7 - 12);
@@ -207,7 +207,7 @@ public class Level : MonoBehaviour
             indices.Add(vertices.Count +  4 - 12);
             indices.Add(vertices.Count +  9 - 12);
             indices.Add(vertices.Count +  5 - 12);
-            indices.Add(vertices.Count +  4 - 12);
+            indices.Add(vertices.Count +  9 - 12);
             indices.Add(vertices.Count + 10 - 12);
             indices.Add(vertices.Count +  5 - 12);
             indices.Add(vertices.Count +  6 - 12);
@@ -219,7 +219,7 @@ public class Level : MonoBehaviour
             indices.Add(vertices.Count +  7 - 12);
             indices.Add(vertices.Count + 11 - 12);
             indices.Add(vertices.Count +  8 - 12);
-            indices.Add(vertices.Count + 11 - 12);
+            indices.Add(vertices.Count +  7 - 12);
             indices.Add(vertices.Count +  8 - 12);
             indices.Add(vertices.Count +  6 - 12);
         }
