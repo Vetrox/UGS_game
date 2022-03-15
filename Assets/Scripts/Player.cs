@@ -139,19 +139,22 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (nextMove == NextMove.UP && collision.collider.CompareTag("FloorTile")) {
+        if (nextMove == NextMove.UP && collision.collider.CompareTag("FloorTile"))
+        {
             nextMove = NextMove.NONE;
             firstPhysicsMovement = true;
+        }
+        if (!GameManager.gameOver && (collision.collider.CompareTag("Obstacle") || collision.collider.CompareTag("Destructible")))
+        {
+            rigidBody.velocity = Vector3.zero;
+            print("Collided with obstacle");
+            GameOver();
         }
     }
 
     void OnTriggerEnter(Collider collider)
     {
-        if (!GameManager.gameOver && (collider.CompareTag("Obstacle") || collider.CompareTag("Destructible"))) {
-            rigidBody.velocity = Vector3.zero;
-            print("Collided with saw");
-            GameOver();
-        } else if(!GameManager.gameOver && collider.CompareTag("Goal"))
+        if(!GameManager.gameOver && collider.CompareTag("Goal"))
         {
             YouWon();
         }
