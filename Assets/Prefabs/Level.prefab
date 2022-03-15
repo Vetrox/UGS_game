@@ -51,3 +51,5 @@ MonoBehaviour:
   floorTileConnectorRL: {fileID: 4051874684099019134, guid: 357b1be2ad68fd3ab8794be1e58caf80, type: 3}
   sawPrefab: {fileID: 6694000137219553482, guid: a597f2b774599deaebd23e49b4ca818a, type: 3}
   pipePrefab: {fileID: 7282897922530503552, guid: 95d3295a59bf94c2886eff542e9a69f1, type: 3}
+  goalPrefab: {fileID: 3164543476790160696, guid: d5998fe3bd744d34d9c8d54c2c2d2b76, type: 3}
+  wallPrefab: {fileID: 2127659579293787449, guid: 52c772c9d7748402b85330fd298fb50e, type: 3}

@@ -23,6 +23,7 @@ public class Level : MonoBehaviour
     public Transform sawPrefab;
     public Transform pipePrefab;
     public Transform goalPrefab;
+    public Transform wallPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -70,6 +71,11 @@ public class Level : MonoBehaviour
                     Instantiate(floorTileStraight2Prefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
                     Instantiate(floorTileStraight3Prefab, new Vector3(lane, y, z + 2), Quaternion.identity, this.transform);
                     Instantiate(pipePrefab, new Vector3(lane, y + 1, z + 1), Quaternion.identity, this.transform);
+                    break;
+                case 'w':
+                    Instantiate(floorTileStraight2Prefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
+                    Instantiate(floorTileStraight3Prefab, new Vector3(lane, y, z + 2), Quaternion.identity, this.transform);
+                    Instantiate(wallPrefab, new Vector3(lane, y + 1, z + 1), Quaternion.identity, this.transform);
                     break;
             }
 

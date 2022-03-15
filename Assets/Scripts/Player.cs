@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (!GameManager.gameOver && collider.CompareTag("Saw")) {
+        if (!GameManager.gameOver && (collider.CompareTag("Obstacle") || collider.CompareTag("Destructible"))) {
             rigidBody.velocity = Vector3.zero;
             print("Collided with saw");
             GameOver();

@@ -65,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 42e247110cfc84194b9aca742a8a60c3, type: 3}
       propertyPath: m_TagString
-      value: Saw
+      value: Obstacle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42e247110cfc84194b9aca742a8a60c3, type: 3}
@@ -74,6 +74,20 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 42e247110cfc84194b9aca742a8a60c3, type: 3}
   m_PrefabInstance: {fileID: 6588595649881464609}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &4369772193058438536
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6318001638276817520}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3434663574443255315, guid: 42e247110cfc84194b9aca742a8a60c3, type: 3}
 --- !u!95 &1877761810769047920
 Animator:
   serializedVersion: 3
@@ -93,17 +107,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!64 &4369772193058438536
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6318001638276817520}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 3434663574443255315, guid: 42e247110cfc84194b9aca742a8a60c3, type: 3}
