@@ -948,7 +948,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee6cc2f0596b0e28b9874410c2c1022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceMult: {x: 6, y: 8}
+  jumpHeight: 2
+  jumpDistance: 30
   deadzone: 0.501
   duckDuration: 0.2
   shootingDelay: 0.5

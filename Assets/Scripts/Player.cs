@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
         DOWN
     }
 
-    public Vector2 forceMult = new Vector2(2, 5);
+    public float jumpHeight = 2.0f, jumpDistance = 2.0f;
     [Range(0f, 1f)]
     public float deadzone = 0.25f;
     public float duckDuration = 0.5f;
@@ -37,17 +37,19 @@ public class Player : MonoBehaviour
     private bool wasUnderDeadzone = true;
    
     private float forwardVelocity;
+    private float sidewardVelocity;
+    private float jumpVelocity;
 
     Vector3 MoveToV3(NextMove move)
     {
         switch(move)
         {
             case NextMove.LEFT:
-                return Vector3.left;
+                return Vector3.left * sidewardVelocity + Vector3.forward * forwardVelocity;
             case NextMove.RIGHT:
-                return Vector3.right;
+                return Vector3.right * sidewardVelocity + Vector3.forward * forwardVelocity;
             case NextMove.UP:
-                return Vector3.up;
+                return Vector3.up * jumpVelocity + Vector3.forward * forwardVelocity;
 
             default:
                 return Vector3.zero;
@@ -63,9 +65,20 @@ public class Player : MonoBehaviour
         sphereCollider = GetComponent<SphereCollider>();
         laserShootSound = GetComponent<AudioSource>();
 
+        // forward velocity from bpm
         float beatLength = 60.0f / GameManager.GetCurrentLevel().bpm;
         forwardVelocity = 5.0f / beatLength;
         rigidBody.velocity = Vector3.forward * forwardVelocity;
+
+        // sidewards velocity from bpm (should take 1/8 beatLength)
+        sidewardVelocity = 1.0f / beatLength;
+
+        // gravity and upwards velocity from bpm
+        // i have no idea how or why this formula works, but it does, so don't touch it
+        float t = jumpDistance / forwardVelocity / 2.0f;
+        float gravity = 2.0f * jumpHeight / (t * t);
+        jumpVelocity = gravity * t;
+        Physics.gravity = Vector3.down * gravity;
     }
 
     void Shoot()
@@ -191,7 +204,7 @@ public class Player : MonoBehaviour
                 duckStart = Time.realtimeSinceStartup;
             } else {
                 var moveVec = MoveToV3(nextMove);
-                rigidBody.velocity = new Vector3(moveVec.x * forceMult.x, moveVec.y * forceMult.y, forwardVelocity);
+                rigidBody.velocity = moveVec;
             }
             return;
         }
