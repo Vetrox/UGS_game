@@ -26,6 +26,9 @@ public class Level : MonoBehaviour
     public Transform goalPrefab;
     public Transform wallPrefab;
 
+    [System.NonSerialized]
+    public float levelLength;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,7 +82,8 @@ public class Level : MonoBehaviour
             z += 5;
         }
 
-        Instantiate(goalPrefab, new Vector3(lane, y+2, z), Quaternion.identity, this.transform);
+        Instantiate(goalPrefab, new Vector3(lane, y + 2, z), Quaternion.identity, this.transform);
         Instantiate(floorTileStraight3Prefab, new Vector3(lane, y, z), Quaternion.identity, this.transform);
+        levelLength = z;
     }
 }

@@ -109,6 +109,10 @@ public class GameManager : MonoBehaviour
         return lastPercentage;
     }
 
+    public static AudioSource GetCurrentAudioSource()
+    {
+        return audioSource;
+    }
 
     public static void PlayCurrentSong(float offset)
     {

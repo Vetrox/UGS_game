@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    enum NextMove {
+    enum Move {
         NONE,
         LEFT,
         RIGHT,
@@ -13,62 +13,52 @@ public class Player : MonoBehaviour
         DOWN
     }
 
+    // exported to editor
     public float jumpHeight = 2.0f, jumpDistance = 2.0f;
-    [Range(0f, 1f)]
+    [Range(0.0f, 1.0f)]
     public float deadzone = 0.25f;
     public float duckDuration = 0.5f;
-
-    private float shootingCooldown;
     public float shootingDelay;
     public Transform bulletPrefab;
 
-    private AudioSource laserShootSound;
-
-    private Vector2Int lanePos = new Vector2Int(0, 1);
-    private NextMove nextMove;
+    // movement state
+    private float shootingCooldown;
     private float duckStart;
+    private Vector2Int lanePosition = new Vector2Int(0, 1);
+    private Move currentMove;
+    private bool acceptInput;
 
-    private Rigidbody rigidBody;
+    // physics (we only care about xy velocity as the z position is directly set each frame)
+    private Vector2 velocity;
+    private Vector2 acceleration;
+    private float levelTime;
+
+    // components and resources
     private Animator animator;
     private Animator barrelAnimator;
     private SphereCollider sphereCollider;
+    private AudioSource laserShootSound;
 
-    private bool firstPhysicsMovement = true;
-    private bool wasUnderDeadzone = true;
-   
+    // precalculated and preset values
     private float forwardVelocity;
     private float sidewardVelocity;
     private float jumpVelocity;
-
-    Vector3 MoveToV3(NextMove move)
-    {
-        switch(move)
-        {
-            case NextMove.LEFT:
-                return Vector3.left * sidewardVelocity + Vector3.forward * forwardVelocity;
-            case NextMove.RIGHT:
-                return Vector3.right * sidewardVelocity + Vector3.forward * forwardVelocity;
-            case NextMove.UP:
-                return Vector3.up * jumpVelocity + Vector3.forward * forwardVelocity;
-
-            default:
-                return Vector3.zero;
-        }
-    }
+    private float gravity;
+    private float levelDuration;
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidBody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         barrelAnimator = GetComponentsInChildren<Animator>()[1]; // skip the parent
         sphereCollider = GetComponent<SphereCollider>();
         laserShootSound = GetComponent<AudioSource>();
 
+        levelDuration = GameManager.GetCurrentAudioSource().clip.length;
+
         // forward velocity from bpm
         float beatLength = 60.0f / GameManager.GetCurrentLevel().bpm;
         forwardVelocity = 5.0f / beatLength;
-        rigidBody.velocity = Vector3.forward * forwardVelocity;
 
         // sidewards velocity from bpm (should take 1/8 beatLength)
         sidewardVelocity = 4.0f / beatLength;
@@ -76,9 +66,9 @@ public class Player : MonoBehaviour
         // gravity and upwards velocity from bpm
         // i have no idea how or why this formula works, but it does, so don't touch it
         float t = jumpDistance / forwardVelocity / 2.0f;
-        float gravity = 2.0f * jumpHeight / (t * t);
+        gravity = 2.0f * jumpHeight / (t * t);
         jumpVelocity = gravity * t;
-        Physics.gravity = Vector3.down * gravity;
+        acceleration = Vector3.down * gravity;
     }
 
     void Shoot()
@@ -92,12 +82,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.gameOver) return;
+        // game over and pause
+        if (GameManager.gameOver)
+            return;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameManager.IsPaused()) GameManager.ResumeLevel();
-            else
-            {
+            if (GameManager.IsPaused()) { 
+                GameManager.ResumeLevel();
+            } else {
                 GameManager.PauseLevel();
                 return;
             }
@@ -110,49 +102,106 @@ public class Player : MonoBehaviour
 
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        bool underDeadzone = Mathf.Abs(horizontalInput) < deadzone && Mathf.Abs(verticalInput) < deadzone;
+        bool newInput = Mathf.Abs(horizontalInput) >= deadzone || Mathf.Abs(verticalInput) >= deadzone;
 
-        if (underDeadzone) {
-            wasUnderDeadzone = true;
-            return;
+        if (!newInput && !acceptInput) {
+            // if we didn't accept input before and there is no new input, allow new input next frame
+            acceptInput = true;
         }
 
-        if (!wasUnderDeadzone || nextMove != NextMove.NONE) {
-            return;
+        if (acceptInput && newInput && currentMove == Move.NONE) {
+            // if we accept input and there is new input and we are not moving and we are on ground, handle it
+
+            // disallow input next frame and handle current input
+            acceptInput = false;
+            if (horizontalInput < -deadzone) {
+                currentMove = Move.LEFT;
+                lanePosition.x--;
+                // left (set leftwards velocity)
+                velocity = Vector3.left * sidewardVelocity;
+            } else if (horizontalInput > deadzone) {
+                currentMove = Move.RIGHT;
+                lanePosition.x++;
+                // right (set rightwards velocity)
+                velocity = Vector3.right * sidewardVelocity;
+            } else if (verticalInput < -deadzone) {
+                currentMove = Move.DOWN;
+                // duck (change hitbox and start timer)
+                animator.SetTrigger("DuckEntry");
+                sphereCollider.radius = 0.352f;
+                sphereCollider.center = new Vector3(0.0f, 0.352f, 0.0f);
+                duckStart = Time.realtimeSinceStartup;
+            } else if (verticalInput > deadzone) {
+                currentMove = Move.UP;
+                // jump (set upwards velocity)
+                velocity = Vector3.up * jumpVelocity;
+            }
         }
 
-        wasUnderDeadzone = false;
-        if (horizontalInput < 0) {
-            nextMove = NextMove.LEFT;
-            lanePos.x--;
-        } else if (horizontalInput > 0) {
-            nextMove = NextMove.RIGHT;
-            lanePos.x++;
-        } else if (verticalInput < 0)
-        {
-            nextMove = NextMove.DOWN;
-        } else if (verticalInput > 0)
-        {
-            nextMove = NextMove.UP;
-        }
-    }
+        // calculate next position and velocity
+        Vector2 nextPosition = new Vector2(transform.position.x, transform.position.y) + Time.deltaTime * velocity;
+        Vector2 nextVelocity = velocity + Time.deltaTime * acceleration;
+        float newZ = levelTime * forwardVelocity;
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (nextMove == NextMove.UP && collision.collider.CompareTag("FloorTile")) {
-            nextMove = NextMove.NONE;
-            firstPhysicsMovement = true;
+        if (currentMove != Move.NONE) {
+            // if we are not handling new input and there is a move currently going on, update it
+            bool resetMove = false;
+            switch (currentMove) {
+                case Move.UP:
+                    resetMove = Physics.Raycast(new Vector3(nextPosition.x, nextPosition.y + 0.5f, newZ), Vector3.down, 0.499f, ~LayerMask.GetMask("Player"));
+                    break;
+                case Move.DOWN:
+                    resetMove = Time.realtimeSinceStartup > duckStart + duckDuration;
+                    if (resetMove) {
+                        animator.SetTrigger("DuckExit");
+                        sphereCollider.radius = 0.5f;
+                        sphereCollider.center = new Vector3(0.0f, 0.5f, 0f);
+                    }
+                    break;
+                case Move.RIGHT:
+                    resetMove = nextPosition.x > lanePosition.x;
+                    break;
+                case Move.LEFT:
+                    resetMove = nextPosition.x < lanePosition.x;
+                    break;
+            }
+
+            if (resetMove) {
+                // a reset consists of zeroing the velocity and currentMove and setting the x position
+                // if we reset here there's no need to update physics down below
+                velocity = Vector2.zero;
+                currentMove = Move.NONE;
+                transform.position = new Vector3(lanePosition.x, Mathf.Ceil(nextPosition.y - 0.5f), newZ);
+                return;
+            }
         }
+
+        // apply new velocity and new position (with calculated z) and update time
+        velocity = nextVelocity;
+        transform.position = new Vector3(nextPosition.x, nextPosition.y, newZ);
+
+        // if we end up "in the ground", reset y velocity and y position
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + 0.5f * Vector3.up, Vector3.down, out hit, 0.499f, ~LayerMask.GetMask("Player"))) {
+            velocity = new Vector2(velocity.x, 0.0f);
+            transform.position = new Vector3(transform.position.x, Mathf.Ceil(hit.point.y - 0.5f), transform.position.z);
+        }
+
+        levelTime += Time.deltaTime;
     }
 
     void OnTriggerEnter(Collider collider)
     {
-        if (!GameManager.gameOver && (collider.CompareTag("Obstacle") || collider.CompareTag("Destructible"))) {
-            rigidBody.velocity = Vector3.zero;
-            print("Collided with saw");
+        if (GameManager.gameOver) {
+            // ignore events if game is over
+            return;
+        }
+
+        if (collider.CompareTag("Obstacle") || collider.CompareTag("Destructible")) {
+            // collision with obstacle (game over)
             GameOver();
-        } else if(!GameManager.gameOver && collider.CompareTag("Goal"))
-        {
+        } else if (collider.CompareTag("Goal")) {
+            // collision with goal (win)
             YouWon();
         }
     }
@@ -180,65 +229,5 @@ public class Player : MonoBehaviour
     {
         GameManager.gameOver = true;
         Invoke("LoadGameOverScreen", 1);
-    }
-
-    void FixedUpdate()
-    {
-        if (!GameManager.gameOver && (transform.position.y < -1 || rigidBody.velocity.z < forwardVelocity * 0.9)) {
-            print(rigidBody.velocity.z + " expected " + forwardVelocity);
-            GameOver();
-            return;
-        }
-
-        if (GameManager.gameOver || nextMove == NextMove.NONE) {
-            return;
-        }
-        
-        if (firstPhysicsMovement)
-        {
-            firstPhysicsMovement = false;
-            if (nextMove == NextMove.DOWN) {
-                animator.SetTrigger("DuckEntry");
-                sphereCollider.radius = 0.352f;
-                sphereCollider.center = new Vector3(0.0f, 0.352f, 0.0f);
-                duckStart = Time.realtimeSinceStartup;
-            } else {
-                var moveVec = MoveToV3(nextMove);
-                rigidBody.velocity = moveVec;
-            }
-            return;
-        }
-
-        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, forwardVelocity);
-
-        Vector2 curPos = new Vector2(transform.position.x, transform.position.y);
-        Vector2 curVel = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
-        Vector2 nextPos = curPos + curVel * Time.fixedDeltaTime;
-
-        bool should_reset = false;
-        switch (nextMove) {
-            case NextMove.RIGHT:
-                should_reset = nextPos.x > lanePos.x;
-                break;
-            case NextMove.LEFT:
-                should_reset = nextPos.x < lanePos.x;
-                break;
-            case NextMove.DOWN:
-                should_reset = Time.realtimeSinceStartup > duckStart + duckDuration;
-                if (should_reset) {
-                    animator.SetTrigger("DuckExit");
-                    sphereCollider.radius = 0.5f;
-                    sphereCollider.center = new Vector3(0.0f, 0.5f, 0f);
-                }
-                break;
-        }
-
-        if (should_reset) {
-            nextMove = NextMove.NONE;
-            firstPhysicsMovement = true;
-            rigidBody.velocity = new Vector3(0, rigidBody.velocity.y, forwardVelocity);
-            transform.position = new Vector3(lanePos.x, transform.position.y, transform.position.z);
-            transform.rotation = Quaternion.identity;
-        }
     }
 }

@@ -12,7 +12,7 @@ public class CamPositionUpdater : MonoBehaviour
     [Range(0.01f, 1f)]
     public float stiffnes = 0.75f;
 
-    void FixedUpdate()
+    void Update()
     {
         Vector3 expected = player.position + Vector3.back * horizontalDistance + Vector3.up * verticalDistance;
         transform.position = Vector3.Lerp(transform.position, expected, stiffnes);

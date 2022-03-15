@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 346192105649457584, guid: 6898c6100c91e7b429ddec5f9f5ce937, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 468369377305325543, guid: 6898c6100c91e7b429ddec5f9f5ce937, type: 3}
       propertyPath: m_RootOrder
       value: 0
