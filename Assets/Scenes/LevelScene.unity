@@ -498,8 +498,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level
       objectReference: {fileID: 0}
+    - target: {fileID: 1896042046878290462, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
+      propertyPath: m_TagString
+      value: Level
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
+--- !u!1 &528830528 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1896042046878290462, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
+  m_PrefabInstance: {fileID: 528830527}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &528830529
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528830528}
+  m_Material: {fileID: 13400000, guid: ef3f0b841e756ec7d9482b8b899a8ee1, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &739530304
 GameObject:
   m_ObjectHideFlags: 0

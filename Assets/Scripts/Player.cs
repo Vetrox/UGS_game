@@ -139,7 +139,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (nextMove == NextMove.UP && collision.collider.CompareTag("FloorTile"))
+        if (nextMove == NextMove.UP && collision.collider.CompareTag("Level"))
         {
             nextMove = NextMove.NONE;
             firstPhysicsMovement = true;
