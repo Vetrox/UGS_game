@@ -42,6 +42,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloorTileStraight2
       objectReference: {fileID: 0}
+    - target: {fileID: 7810490583088066587, guid: 048b5f691f3736d85b8837d06f347c35, type: 3}
+      propertyPath: m_Size.x
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810490583088066587, guid: 048b5f691f3736d85b8837d06f347c35, type: 3}
+      propertyPath: m_Size.z
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7986711009061295692, guid: 048b5f691f3736d85b8837d06f347c35, type: 3}
       propertyPath: m_RootOrder
       value: 0
