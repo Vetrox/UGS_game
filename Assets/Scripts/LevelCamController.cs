@@ -29,8 +29,11 @@ public class LevelCamController : MonoBehaviour
         var lowerLim = -10;
         var delta = Mathf.Abs(lowerLim - upperLim);
 
+        var mult = GameManager.PersistantSettings.Instance().MasterVolume / 100f; // [0,1]
         var low     = reducedSpectrum[0];
         var mid     = reducedSpectrum[1];
+        low /= mult;
+        mid /= mult;
         // var high    = reducedSpectrum[2];
         low = Mathf.Log(low); mid = Mathf.Log(mid); 
         // high = Mathf.Log(high);
@@ -40,8 +43,8 @@ public class LevelCamController : MonoBehaviour
         low /= 3;
         // high = Mathf.Clamp(high, lowerLim, upperLim) - lowerLim;
 
-        Vector3 lowCol = new Vector3(79, 0, 0) / 255;
-        Vector3 midCol = new Vector3(217, 206, 214) / 255;
+        Vector3 lowCol = new Vector3(102, 182, 226) / 255;
+        Vector3 midCol = new Vector3(17, 71, 196) / 255;
 
         float interp;
         if (low > mid)
@@ -51,7 +54,7 @@ public class LevelCamController : MonoBehaviour
         {
             interp = 1;
         }
-        var l = Vector3.zero;
+        var l = new Vector3(115, 136, 183) / 255;
         if (Mathf.Max(low, mid) / delta > 0.1)
         {
             l = Vector3.Lerp(lowCol, midCol, interp);
@@ -61,7 +64,7 @@ public class LevelCamController : MonoBehaviour
             l = Vector3.Lerp(last, l, 1f);
         } else
         {
-            l = Vector3.Lerp(last, l, 0.01f);
+            l = Vector3.Lerp(last, l, 0.5f * Time.deltaTime);
         }
         var col = new Color(l.x, l.y, l.z);
         material.color = col;
