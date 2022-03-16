@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     public float jumpHeight = 2.0f, jumpDistance = 2.0f;
     [Range(0f, 1f)]
     public float deadzone = 0.25f;
-    public float duckDuration = 0.5f;
+    private float duckDistance = 4;
 
     private float shootingCooldown;
     public float shootingDelay;
@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     private float forwardVelocity;
     private float sidewardVelocity;
     private float jumpVelocity;
+    private float duckDuration;
 
     Vector3 MoveToV3(NextMove move)
     {
@@ -79,6 +80,8 @@ public class Player : MonoBehaviour
         float t = jumpDistance / forwardVelocity / 2.0f;
         float gravity = 2.0f * jumpHeight / (t * t);
         jumpVelocity = gravity * t;
+
+        duckDuration = duckDistance / forwardVelocity;
         Physics.gravity = Vector3.down * gravity;
     }
 
