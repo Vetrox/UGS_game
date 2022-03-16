@@ -615,6 +615,7 @@ GameObject:
   - component: {fileID: 1043661681}
   - component: {fileID: 1043661680}
   - component: {fileID: 1043661679}
+  - component: {fileID: 1043661684}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -721,6 +722,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!95 &1043661684
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043661678}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3616798d64c90064fbc4c36b749b87eb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1061957261
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,7 +997,6 @@ MonoBehaviour:
   jumpHeight: 1.5
   jumpDistance: 4
   deadzone: 0.501
-  duckDuration: 0.4
   shootingDelay: 0.5
   bulletPrefab: {fileID: 2527271719917648249, guid: 056f7432568f9a6cc80928bf2aa20ec7, type: 3}
 --- !u!135 &1537006454
@@ -1297,12 +1316,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: ac45ee4b532e62b42b8e82001275eb04, type: 3}
-    m_FontSize: 75
-    m_FontStyle: 0
+    m_FontSize: 30
+    m_FontStyle: 3
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 3
     m_MaxSize: 297
-    m_Alignment: 6
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
@@ -1333,7 +1352,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -711, y: 497.31}
+  m_AnchoredPosition: {x: -711, y: 500}
   m_SizeDelta: {x: 498, y: 86.624}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2113334869
