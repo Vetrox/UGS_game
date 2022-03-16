@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
         barrelAnimator = GetComponentsInChildren<Animator>()[1]; // skip the parent
         sphereCollider = GetComponent<SphereCollider>();
         laserShootSound = GetComponent<AudioSource>();
+        laserShootSound.volume = GameManager.PersistantSettings.Instance().MasterVolume / 100f;
 
         // forward velocity from bpm
         float beatLength = 60.0f / GameManager.GetCurrentLevel().bpm;
