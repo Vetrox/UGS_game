@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private float duckDistance = 4;
 
     private float shootingCooldown;
-    public float shootingDelay;
+    private float shootingDelay;
     public Transform bulletPrefab;
 
     private AudioSource laserShootSound;
@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
         jumpVelocity = gravity * t;
 
         duckDuration = duckDistance / forwardVelocity;
+        shootingDelay = 3 / forwardVelocity;
         Physics.gravity = Vector3.down * gravity;
     }
 
