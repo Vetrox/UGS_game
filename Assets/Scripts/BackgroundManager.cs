@@ -29,9 +29,9 @@ public class BackgroundManager : MonoBehaviour
     void generate()
     {
         int hi = Random.Range(0, housePrefabs.Length);
-        Transform houseLeft = Instantiate(housePrefabs[hi], new Vector3(player.transform.position.x - 5.0f, 0.0f, largestZ), Quaternion.identity);
+        Transform houseLeft = Instantiate(housePrefabs[hi], new Vector3(player.transform.position.x - 5.0f, player.transform.position.y - 2.0f, largestZ), Quaternion.identity);
         hi = Random.Range(0, housePrefabs.Length);
-        Transform houseRight = Instantiate(housePrefabs[hi], new Vector3(player.transform.position.x + 5.0f, 0.0f, largestZ), Quaternion.AngleAxis(180.0f, Vector3.up));
+        Transform houseRight = Instantiate(housePrefabs[hi], new Vector3(player.transform.position.x + 5.0f, player.transform.position.y - 2.0f, largestZ), Quaternion.AngleAxis(180.0f, Vector3.up));
         houses.Enqueue(new HousePair(houseLeft, houseRight));
         largestZ += 4;
     }
