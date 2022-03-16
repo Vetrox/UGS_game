@@ -24,6 +24,7 @@ public class VolumeTextInputHandler : MonoBehaviour
         try
         {
             int newVolume = int.Parse(textField.text);
+            if (newVolume < 1 || newVolume > 100) return;
             GameManager.PersistantSettings.Instance().MasterVolume = newVolume;
             GameManager.getInstance().SetVolume(newVolume);
         }
