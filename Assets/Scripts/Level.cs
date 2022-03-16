@@ -29,12 +29,12 @@ public class Level : MonoBehaviour
     public Transform wallPrefab;
 
     private Mesh collisionMesh;
-    private MeshCollider collider;
+    private MeshCollider colliderComponent;
 
     // Start is called before the first frame update
     void Start()
     {
-        collider = GetComponent<MeshCollider>();
+        colliderComponent = GetComponent<MeshCollider>();
         cookLevel();
     }
 
@@ -270,7 +270,7 @@ public class Level : MonoBehaviour
         collisionMesh = new Mesh();
         collisionMesh.vertices = vertices.ToArray();
         collisionMesh.triangles = indices.ToArray();
-        collider.sharedMesh = collisionMesh;
+        colliderComponent.sharedMesh = collisionMesh;
 
         Instantiate(goalPrefab, new Vector3(lane, y+2, z), Quaternion.identity, this.transform);
     }
