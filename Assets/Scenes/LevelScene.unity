@@ -629,6 +629,10 @@ PrefabInstance:
       value: Level
       objectReference: {fileID: 0}
     - target: {fileID: 1896042046878290462, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1896042046878290462, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
       propertyPath: m_TagString
       value: Level
       objectReference: {fileID: 0}
@@ -1103,7 +1107,7 @@ MonoBehaviour:
   jumpHeight: 1.5
   jumpDistance: 4
   deadzone: 0.501
-  duckDuration: 0.2
+  duckDuration: 0.4
   shootingDelay: 0.5
   bulletPrefab: {fileID: 2527271719917648249, guid: 056f7432568f9a6cc80928bf2aa20ec7, type: 3}
 --- !u!135 &1537006454
@@ -1117,7 +1121,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.49
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1537006455 stripped
 GameObject:

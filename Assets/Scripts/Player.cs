@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     public float jumpHeight = 2.0f, jumpDistance = 2.0f;
     [Range(0f, 1f)]
     public float deadzone = 0.25f;
-    public float duckDuration = 0.5f;
+    private float duckDistance = 4;
 
     private float shootingCooldown;
     public float shootingDelay;
@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     private float forwardVelocity;
     private float sidewardVelocity;
     private float jumpVelocity;
+    private float duckDuration;
 
     Vector3 MoveToV3(NextMove move)
     {
@@ -64,6 +65,7 @@ public class Player : MonoBehaviour
         barrelAnimator = GetComponentsInChildren<Animator>()[1]; // skip the parent
         sphereCollider = GetComponent<SphereCollider>();
         laserShootSound = GetComponent<AudioSource>();
+        laserShootSound.volume = GameManager.PersistantSettings.Instance().MasterVolume / 100f;
 
         // forward velocity from bpm
         float beatLength = 60.0f / GameManager.GetCurrentLevel().bpm;
@@ -78,6 +80,8 @@ public class Player : MonoBehaviour
         float t = jumpDistance / forwardVelocity / 2.0f;
         float gravity = 2.0f * jumpHeight / (t * t);
         jumpVelocity = gravity * t;
+
+        duckDuration = duckDistance / forwardVelocity;
         Physics.gravity = Vector3.down * gravity;
     }
 
@@ -117,7 +121,8 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (!wasUnderDeadzone || nextMove != NextMove.NONE) {
+        var onGround = Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Vector3.down, 0.51f, LayerMask.GetMask("Ground"));
+        if (!wasUnderDeadzone || nextMove != NextMove.NONE || !onGround) {
             return;
         }
 
