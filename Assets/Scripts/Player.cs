@@ -206,6 +206,7 @@ public class Player : MonoBehaviour
     {
         SavePercentage();
         GameManager.gameOver = true;
+        rigidBody.velocity = new Vector3(0.0f, rigidBody.velocity.y, rigidBody.velocity.z);
         Invoke("LoadGameOverScreen", 1);
     }
 
