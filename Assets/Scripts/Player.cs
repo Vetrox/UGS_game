@@ -117,7 +117,8 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (!wasUnderDeadzone || nextMove != NextMove.NONE) {
+        var onGround = Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Vector3.down, 0.51f, LayerMask.GetMask("Ground"));
+        if (!wasUnderDeadzone || nextMove != NextMove.NONE || !onGround) {
             return;
         }
 
