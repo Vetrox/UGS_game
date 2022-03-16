@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     {
         public int   FPSCap          = 60;
         public bool  VSyncEnabled    = false;
+        public int   MasterVolume    = 50;
 
         public List<Pair> highScores = new List<Pair>(); // level.id -> percentage completion
 
@@ -83,6 +84,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         audioSource = instance.GetComponent<AudioSource>();
+        SetVolume(PersistantSettings.Instance().MasterVolume);
         QualitySettings.vSyncCount = PersistantSettings.Instance().VSyncEnabled ? 1 : 0;
         Application.targetFrameRate = PersistantSettings.Instance().FPSCap;
     }
@@ -100,6 +102,11 @@ public class GameManager : MonoBehaviour
 
     private static LevelFile currentLevel;
     private static AudioClip currentSong;
+
+    public void SetVolume(int percentage)
+    {
+        audioSource.volume = percentage / 100f;
+    }
 
     public static LevelFile GetCurrentLevel()
     {

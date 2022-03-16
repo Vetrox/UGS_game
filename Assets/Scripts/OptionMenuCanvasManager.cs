@@ -6,6 +6,7 @@ public class OptionMenuCanvasManager : MonoBehaviour
 
     [SerializeField] private Canvas mainCanvas;
     [SerializeField] private Canvas videoCanvas;
+    [SerializeField] private Canvas audioCanvas;
 
     private static Canvas currentCanvas;
 
@@ -15,6 +16,7 @@ public class OptionMenuCanvasManager : MonoBehaviour
         currentCanvas.enabled = true;
 
         videoCanvas.enabled = false;
+        audioCanvas.enabled = false;
     }
 
     public void DisplayVideoSettigs()
@@ -29,5 +31,12 @@ public class OptionMenuCanvasManager : MonoBehaviour
         currentCanvas.enabled = false;
         mainCanvas.enabled = true;
         currentCanvas = mainCanvas;
+    }
+
+    public void DisplayAudioSettings()
+    {
+        currentCanvas.enabled = false;
+        audioCanvas.enabled = true;
+        currentCanvas = audioCanvas;
     }
 }
