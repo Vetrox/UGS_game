@@ -189,6 +189,7 @@ GameObject:
   - component: {fileID: 81595444}
   - component: {fileID: 81595445}
   - component: {fileID: 81595446}
+  - component: {fileID: 81595447}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -367,6 +368,25 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!95 &81595447
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81595439}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a8cf8214eef3d5d29a9b908e5796e210, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &250334214
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,6 +644,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1896042046878290461, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
+      propertyPath: rotatePrefab
+      value: 
+      objectReference: {fileID: 7724303499938278667, guid: 38ffc90aca3d98293a82eb883911856f, type: 3}
     - target: {fileID: 1896042046878290462, guid: cba37ca6ce6095e4aa6dc3316c04a01a, type: 3}
       propertyPath: m_Name
       value: Level
@@ -1129,6 +1153,7 @@ MonoBehaviour:
   deadzone: 0.501
   shootingDelay: 0.5
   bulletPrefab: {fileID: 2527271719917648249, guid: 056f7432568f9a6cc80928bf2aa20ec7, type: 3}
+  cameraAnimator: {fileID: 81595447}
 --- !u!135 &1537006454
 SphereCollider:
   m_ObjectHideFlags: 0

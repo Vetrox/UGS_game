@@ -9,6 +9,7 @@ TagManager:
   - Goal
   - Destructible
   - Obstacle
+  - CameraRotate
   layers:
   - Default
   - TransparentFX

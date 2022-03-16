@@ -26,6 +26,7 @@ public class Level : MonoBehaviour
     public Transform sawPrefab;
     public Transform pipePrefab;
     public Transform goalPrefab;
+    public Transform rotatePrefab;
     public Transform wallPrefab;
 
     private Mesh collisionMesh;
@@ -230,7 +231,7 @@ public class Level : MonoBehaviour
         vertices.Add(new Vector3(0.5f, 0.0f, -4.0f));
         instantiateStraight4(0.0f, 0.0f, -4.0f);
 
-        foreach (char c in GameManager.GetCurrentLevel().data) {
+        foreach (char c in GameManager.GetCurrentLevel().data.Replace(" ", "")) {
             switch (c) {
                 case '-':
                     instantiateStraight5(0.0f, 0.0f, 0.0f);
@@ -262,6 +263,10 @@ public class Level : MonoBehaviour
                     instantiateStraight5(0.0f, 0.0f, 0.0f);
                     Instantiate(wallPrefab, new Vector3(lane, y + 1, z + 1), Quaternion.identity, this.transform);
                     break;
+                case 'c':
+                    instantiateStraight5(0.0f, 0.0f, 0.0f);
+                    Instantiate(rotatePrefab, new Vector3(lane, y + 1, z + 1), Quaternion.identity, this.transform);
+                    break;
             }
 
             z += 5;
@@ -272,6 +277,7 @@ public class Level : MonoBehaviour
         collisionMesh.triangles = indices.ToArray();
         colliderComponent.sharedMesh = collisionMesh;
 
+        instantiateStraight5(0.0f, 0.0f, 0.0f);
         Instantiate(goalPrefab, new Vector3(lane, y+2, z), Quaternion.identity, this.transform);
     }
 }

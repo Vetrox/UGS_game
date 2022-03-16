@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     private float shootingCooldown;
     public float shootingDelay;
     public Transform bulletPrefab;
+    public Animator cameraAnimator;
 
     private AudioSource laserShootSound;
 
@@ -144,13 +145,14 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (nextMove == NextMove.UP && collision.collider.CompareTag("Level"))
-        {
+        if (GameManager.gameOver) {
+            return;
+        }
+
+        if (collision.collider.CompareTag("Level") && nextMove == NextMove.UP) {
             nextMove = NextMove.NONE;
             firstPhysicsMovement = true;
-        }
-        if (!GameManager.gameOver && (collision.collider.CompareTag("Obstacle") || collision.collider.CompareTag("Destructible")))
-        {
+        } else if (collision.collider.CompareTag("Obstacle") || collision.collider.CompareTag("Destructible")) {
             rigidBody.velocity = Vector3.zero;
             print("Collided with obstacle");
             GameOver();
@@ -159,9 +161,14 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if(!GameManager.gameOver && collider.CompareTag("Goal"))
-        {
+        if (GameManager.gameOver) {
+            return;
+        }
+
+        if (collider.CompareTag("Goal")) {
             YouWon();
+        } else if (collider.CompareTag("CameraRotate")) {
+            cameraAnimator.SetTrigger("Rotate");
         }
     }
 
