@@ -17,7 +17,7 @@ public class LevelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             .ToString("0.0", CultureInfo.InvariantCulture);
 
         songInfoText.text = $"{levelFile.displayName} by {levelFile.interpret}\n" +
-            $"{levelFile.bpm}\n" +
+            $"{levelFile.bpm} bpm\n" +
             $"High Score: {percentage}%";
         GameManager.SetActiveLevel(levelFile);
         GameManager.PlayCurrentSong(0);
