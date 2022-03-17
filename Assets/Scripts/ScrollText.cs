@@ -18,14 +18,79 @@ public class ScrollText : MonoBehaviour
         textComp = GetComponent<Text>();
         textComp.text = @"Credits
 
-All and everything
+Lane Switch
 
+Leading Actor
+Wall-B
+
+Supporting Actors
+Saw
+Pipe
+Wall
+Steel-Beam
+
+Background Actors
+House1 (+ Wrap)
+House2 (+ Wrap)
+House3 (+ Wrap)
+House4 (+ Wrap)
+
+Casting Directors
+Bastian
+Felix
+
+Lead costume designer
+Bastian
+Felix
+
+Associate producers
+Bastian
+Felix
+
+Lead editors
+Bastian
+Felix
+
+Production designers
+Bastian
+Felix
+
+Director of photography
+Bastian
+Felix
+
+Executive producers
+Bastian
+Felix
+
+Line producers
+Bastian
+Felix
+
+Sound Director
+Bastian
+Felix
+
+Executive Sound Directors
 Bastian
 Felix
 
 
 
-Part of the music was provided by Wintergatan.";
+Fonts
+
+Source Sans Family by Adobe (OFL)
+Future Techno Italic (Freeware, non-commercial)
+
+
+
+Audio
+
+Laser-shot sound (151022) by bubaproducer (CC)
+See freesound.net
+
+Part of the music was provided by Wintergatan
+See wintergatan.net";
     }
 
   

@@ -69,6 +69,7 @@ public class LevelCamController : MonoBehaviour
         var col = new Color(l.x, l.y, l.z);
         material.color = col;
         Camera.current.backgroundColor = col;
+        RenderSettings.fogColor = col;
         last = l;
     }
 

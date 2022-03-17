@@ -109,6 +109,8 @@ public class Player : MonoBehaviour
             }
         }
 
+        if (GameManager.IsPaused()) return;
+
         if (!GameManager.GetCurrentAudioSource().isPlaying) {
             // we win if the song stops playing
             YouWon();
