@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (audioSource && audioSource.clip && !IsPaused() && !gameOver)
-            lastPercentage = audioSource.time * 100 / audioSource.clip.length;
+            lastPercentage = Mathf.Min(100.0f, audioSource.time * 100 / audioSource.clip.length);
     }
 
     public static GameManager getInstance()
@@ -112,6 +112,12 @@ public class GameManager : MonoBehaviour
     {
         return currentLevel;
     }
+
+    public static AudioSource GetCurrentAudioSource()
+    {
+        return audioSource;
+    }
+
     public static void SetActiveLevel(LevelFile level)
     {
         currentLevel = level;

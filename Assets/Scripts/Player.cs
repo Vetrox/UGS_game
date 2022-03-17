@@ -109,6 +109,11 @@ public class Player : MonoBehaviour
             }
         }
 
+        if (!GameManager.GetCurrentAudioSource().isPlaying) {
+            // we win if the song stops playing
+            YouWon();
+        }
+
         // shooting happens independently of movement, albeit with a certain cooldown period
         if (Time.realtimeSinceStartup > shootingCooldown && Input.GetKeyDown(KeyCode.Space)) {
             Shoot();
@@ -166,9 +171,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (collider.CompareTag("Goal")) {
-            YouWon();
-        } else if (collider.CompareTag("CameraRotate")) {
+        if (collider.CompareTag("CameraRotate")) {
             cameraAnimator.SetTrigger("Rotate");
         }
     }
