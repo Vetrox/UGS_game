@@ -190,21 +190,21 @@ public class Player : MonoBehaviour
 
     void YouWon()
     {
-        SavePercentage();
         GameManager.gameOver = true;
+        SavePercentage(100);
         Invoke("LoadYouWonScreen", 0.5f);
     }
     
-    void SavePercentage()
+    void SavePercentage(float perc)
     { // a combination of serialization and bad api lead to this junk of code.
         var highScores = GameManager.PersistantSettings.Instance().highScores.ToArray();
         for (int i = 0; i < highScores.Length; ++i)
         {
             if (highScores[i].id.Equals(GameManager.GetCurrentLevel().id))
             {
-                if (highScores[i].percentage < GameManager.GetCurrentLevelPercentage())
+                if (highScores[i].percentage < perc)
                 {
-                    highScores[i].percentage = GameManager.GetCurrentLevelPercentage();
+                    highScores[i].percentage = perc;
                 }
                 GameManager.PersistantSettings.Instance().highScores = new List<GameManager.Pair>(highScores);
                 return;
@@ -213,14 +213,14 @@ public class Player : MonoBehaviour
 
         GameManager.PersistantSettings.Instance().highScores.Add(
             new GameManager.Pair(GameManager.GetCurrentLevel().id,
-            GameManager.GetCurrentLevelPercentage()
+            perc
         ));
     }
 
     void GameOver()
     {
-        SavePercentage();
         GameManager.gameOver = true;
+        SavePercentage(GameManager.GetCurrentLevelPercentage());
         rigidBody.velocity = new Vector3(0.0f, rigidBody.velocity.y, rigidBody.velocity.z);
         Invoke("LoadGameOverScreen", 1);
     }

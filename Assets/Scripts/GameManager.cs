@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
     private static GameManager instance = null;
     private static AudioSource audioSource = null;
 
-    private static bool paused = false; // true, when the music and the game is paused
-    public static bool gameOver = false; // true, when we are about to display the gameoverscreen but the level is still loading.
+    private static bool paused = true; // true, when the music and the game is paused
+    public static bool gameOver = true; // true, when we are about to display the gameoverscreen but the level is still loading.
 
     void Awake()
     {
