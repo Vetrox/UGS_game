@@ -278,6 +278,5 @@ public class Level : MonoBehaviour
         colliderComponent.sharedMesh = collisionMesh;
 
         instantiateStraight5(0.0f, 0.0f, 0.0f);
-        Instantiate(goalPrefab, new Vector3(lane, y+2, z), Quaternion.identity, this.transform);
     }
 }
